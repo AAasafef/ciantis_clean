@@ -4,6 +4,7 @@ import '../../models/task_model.dart';
 import '../../services/tasks_service.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
+import '../../widgets/completion_ring.dart';
 import '../../widgets/empty_state_card.dart';
 import '../../widgets/filter_chip_widget.dart';
 import '../../widgets/luxury_button.dart';
@@ -123,48 +124,97 @@ class _HabitsScreenState
               const LuxurySectionSpacing(),
 
               // STATS
-              Row(
-                children: [
+              Container(
+                padding:
+                    const EdgeInsets.all(
+                  22,
+                ),
 
-                  StatOverviewCard(
-                    value:
-                        '$completedCount',
-
-                    label:
-                        'Completed',
-
-                    icon:
-                        Icons.check_circle,
+                decoration: BoxDecoration(
+                  color:
+                      Colors.white
+                          .withOpacity(
+                    .08,
                   ),
 
-                  const SizedBox(width: 12),
-
-                  StatOverviewCard(
-                    value:
-                        '$pendingCount',
-
-                    label:
-                        'Pending',
-
-                    icon:
-                        Icons
-                            .schedule_outlined,
+                  borderRadius:
+                      BorderRadius.circular(
+                    28,
                   ),
+                ),
 
-                  const SizedBox(width: 12),
+                child: Row(
+                  children: [
 
-                  StatOverviewCard(
-                    value:
-                        '$completionRate%',
+                    CompletionRing(
+                      progress:
+                          allTasks.isEmpty
+                              ? 0
+                              : completedCount /
+                                  allTasks.length,
+                    ),
 
-                    label:
-                        'Success',
+                    const SizedBox(
+                      width: 24,
+                    ),
 
-                    icon:
-                        Icons
-                            .trending_up_outlined,
-                  ),
-                ],
+                    Expanded(
+                      child: Column(
+                        children: [
+
+                          Row(
+                            children: [
+
+                              StatOverviewCard(
+                                value:
+                                    '$completedCount',
+
+                                label:
+                                    'Completed',
+
+                                icon:
+                                    Icons
+                                        .check_circle,
+                              ),
+
+                              const SizedBox(
+                                width: 12,
+                              ),
+
+                              StatOverviewCard(
+                                value:
+                                    '$pendingCount',
+
+                                label:
+                                    'Pending',
+
+                                icon:
+                                    Icons
+                                        .schedule_outlined,
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(
+                            height: 12,
+                          ),
+
+                          StatOverviewCard(
+                            value:
+                                '$completionRate%',
+
+                            label:
+                                'Success Rate',
+
+                            icon:
+                                Icons
+                                    .trending_up_outlined,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               const LuxurySectionSpacing(),
