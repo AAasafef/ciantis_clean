@@ -4,6 +4,7 @@ import '../../theme/ciantis_theme.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_card.dart';
+import '../../widgets/progress_ring.dart';
 import '../../widgets/section_title.dart';
 
 class GoalsScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class GoalsScreen extends StatelessWidget {
               CrossAxisAlignment.start,
           children: [
 
-            // PAGE TITLE
+            // TITLE
             const Text(
               'Goals',
               style: TextStyle(
@@ -44,33 +45,40 @@ class GoalsScreen extends StatelessWidget {
 
             const SizedBox(height: 34),
 
-            // DAILY GOALS
+            // DAILY
             const SectionTitle(
               title: 'Daily Focus',
             ),
 
-            LuxuryCard(
+            const LuxuryCard(
               icon: Icons.spa_outlined,
               title: 'Self Care Routine',
               subtitle:
                   'Complete morning skincare and hydration goals.',
-              trailing: _progressCircle('82%'),
+              trailing: ProgressRing(
+                text: '82%',
+              ),
             ),
 
-            LuxuryCard(
+            const LuxuryCard(
               icon: Icons.menu_book_outlined,
               title: 'Read 20 Pages',
               subtitle:
                   'Continue personal growth reading habit.',
-              trailing: _progressCircle('65%'),
+              trailing: ProgressRing(
+                text: '65%',
+              ),
             ),
 
-            LuxuryCard(
-              icon: Icons.fitness_center_outlined,
+            const LuxuryCard(
+              icon:
+                  Icons.fitness_center_outlined,
               title: 'Workout',
               subtitle:
                   'Complete wellness and movement routine.',
-              trailing: _progressCircle('40%'),
+              trailing: ProgressRing(
+                text: '40%',
+              ),
             ),
 
             const SizedBox(height: 28),
@@ -80,57 +88,39 @@ class GoalsScreen extends StatelessWidget {
               title: 'Long-Term Vision',
             ),
 
-            LuxuryCard(
+            const LuxuryCard(
               icon:
                   Icons.account_balance_wallet_outlined,
               title: 'Financial Freedom',
               subtitle:
                   'Debt reduction + savings milestones.',
-              trailing: _progressCircle('21%'),
+              trailing: ProgressRing(
+                text: '21%',
+              ),
             ),
 
-            LuxuryCard(
+            const LuxuryCard(
               icon: Icons.school_outlined,
               title: 'Nursing School',
               subtitle:
                   'Complete prerequisites and graduate.',
-              trailing: _progressCircle('54%'),
+              trailing: ProgressRing(
+                text: '54%',
+              ),
             ),
 
-            LuxuryCard(
+            const LuxuryCard(
               icon: Icons.home_outlined,
               title: 'Dream Home',
               subtitle:
                   'Luxury wellness-centered living space.',
-              trailing: _progressCircle('12%'),
+              trailing: ProgressRing(
+                text: '12%',
+              ),
             ),
 
             const SizedBox(height: 30),
           ],
-        ),
-      ),
-    );
-  }
-
-  static Widget _progressCircle(
-    String text,
-  ) {
-    return Container(
-      height: 54,
-      width: 54,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.white.withOpacity(.25),
-        ),
-        shape: BoxShape.circle,
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: CiantisTheme.white,
-            fontSize: 12,
-          ),
         ),
       ),
     );
