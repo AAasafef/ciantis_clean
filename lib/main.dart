@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'theme/ciantis_theme.dart';
 import 'data/app_items.dart';
 import 'data/side_menu_items.dart';
+import 'data/bottom_nav_items.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -42,14 +43,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       drawer: _sideMenu(),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: CiantisTheme.mainGradient,
-            ),
-          ),
-          Container(
-            color: Colors.black.withOpacity(CiantisTheme.overlayOpacity),
-          ),
+          _background(),
+          _overlay(),
           SafeArea(
             child: Column(
               children: [
@@ -67,6 +62,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Widget _background() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: CiantisTheme.mainGradient,
+      ),
+    );
+  }
+
+  Widget _overlay() {
+    return Container(
+      color: Colors.black.withOpacity(
+        CiantisTheme.overlayOpacity,
+      ),
+    );
+  }
+
   Widget _topBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -74,7 +85,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         vertical: 10,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: () {
@@ -90,7 +102,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             'the life',
             style: TextStyle(
               color: CiantisTheme.white,
-              fontSize: CiantisTheme.appTitleSize,
+              fontSize:
+                  CiantisTheme.appTitleSize,
               fontWeight: FontWeight.w300,
               letterSpacing: 1,
             ),
@@ -102,7 +115,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               });
             },
             child: Icon(
-              showGridMenu ? Icons.close_rounded : Icons.apps_rounded,
+              showGridMenu
+                  ? Icons.close_rounded
+                  : Icons.apps_rounded,
               color: CiantisTheme.white,
               size: 28,
             ),
@@ -114,9 +129,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _homePanel() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24,
+      ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(CiantisTheme.radiusXLarge),
+        borderRadius: BorderRadius.circular(
+          CiantisTheme.radiusXLarge,
+        ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
             sigmaX: CiantisTheme.blurLight,
@@ -125,8 +144,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(CiantisTheme.glassOpacity),
-              borderRadius: BorderRadius.circular(CiantisTheme.radiusXLarge),
+              color: Colors.white.withOpacity(
+                CiantisTheme.glassOpacity,
+              ),
+              borderRadius: BorderRadius.circular(
+                CiantisTheme.radiusXLarge,
+              ),
               border: Border.all(
                 color: Colors.white.withOpacity(
                   CiantisTheme.glassBorderOpacity,
@@ -135,12 +158,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             child: const Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Text(
                   'Welcome back',
                   style: TextStyle(
-                    color: CiantisTheme.whiteSoft,
+                    color:
+                        CiantisTheme.whiteSoft,
                     fontSize: 14,
                   ),
                 ),
@@ -148,17 +173,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Text(
                   'Your luxury life OS',
                   style: TextStyle(
-                    color: CiantisTheme.white,
-                    fontSize: CiantisTheme.titleSize,
-                    fontWeight: FontWeight.w300,
+                    color:
+                        CiantisTheme.white,
+                    fontSize:
+                        CiantisTheme.titleSize,
+                    fontWeight:
+                        FontWeight.w300,
                   ),
                 ),
                 SizedBox(height: 12),
                 Text(
                   'Everything organized beautifully.',
                   style: TextStyle(
-                    color: CiantisTheme.whiteSoft,
-                    fontSize: CiantisTheme.bodySize,
+                    color:
+                        CiantisTheme.whiteSoft,
+                    fontSize:
+                        CiantisTheme.bodySize,
                   ),
                 ),
               ],
@@ -174,14 +204,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Container(
         margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.symmetric(
-          horizontal: CiantisTheme.pagePadding,
+          horizontal:
+              CiantisTheme.pagePadding,
           vertical: 18,
         ),
         decoration: const BoxDecoration(
           color: CiantisTheme.creamPanel,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(CiantisTheme.radiusSheet),
-            topRight: Radius.circular(CiantisTheme.radiusSheet),
+            topLeft: Radius.circular(
+              CiantisTheme.radiusSheet,
+            ),
+            topRight: Radius.circular(
+              CiantisTheme.radiusSheet,
+            ),
           ),
         ),
         child: Column(
@@ -191,19 +226,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
               width: 50,
               decoration: BoxDecoration(
                 color: Colors.brown,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius:
+                    BorderRadius.circular(20),
               ),
             ),
             const SizedBox(height: 24),
             TextField(
               decoration: InputDecoration(
                 filled: true,
-                fillColor: CiantisTheme.white,
-                hintText: 'Search anything...',
-                prefixIcon: const Icon(Icons.search),
+                fillColor:
+                    CiantisTheme.white,
+                hintText:
+                    'Search anything...',
+                prefixIcon:
+                    const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none,
+                  borderRadius:
+                      BorderRadius.circular(18),
+                  borderSide:
+                      BorderSide.none,
                 ),
               ),
             ),
@@ -211,14 +252,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Expanded(
               child: GridView.builder(
                 itemCount: ciantisApps.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   crossAxisSpacing: 14,
                   mainAxisSpacing: 18,
                   childAspectRatio: .82,
                 ),
-                itemBuilder: (context, index) {
-                  final app = ciantisApps[index];
+                itemBuilder:
+                    (context, index) {
+
+                  final app =
+                      ciantisApps[index];
 
                   return Column(
                     children: [
@@ -226,14 +271,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         height: 68,
                         width: 68,
                         decoration: BoxDecoration(
-                          color: CiantisTheme.white,
-                          borderRadius: BorderRadius.circular(
-                            CiantisTheme.radiusMedium,
+                          color:
+                              CiantisTheme.white,
+                          borderRadius:
+                              BorderRadius.circular(
+                            CiantisTheme
+                                .radiusMedium,
                           ),
                         ),
                         child: Icon(
                           app.icon,
-                          color: CiantisTheme.warmBrown,
+                          color:
+                              CiantisTheme
+                                  .warmBrown,
                           size: 28,
                         ),
                       ),
@@ -241,8 +291,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Text(
                         app.title,
                         style: const TextStyle(
-                          fontSize: CiantisTheme.smallSize,
-                          color: CiantisTheme.textBrown,
+                          fontSize:
+                              CiantisTheme
+                                  .smallSize,
+                          color:
+                              CiantisTheme
+                                  .textBrown,
                         ),
                       ),
                     ],
@@ -260,54 +314,88 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Positioned(
       left: 24,
       right: 24,
-      bottom: CiantisTheme.bottomBarBottomPadding,
+      bottom:
+          CiantisTheme.bottomBarBottomPadding,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(CiantisTheme.radiusLarge),
+        borderRadius: BorderRadius.circular(
+          CiantisTheme.radiusLarge,
+        ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: CiantisTheme.blurLight,
-            sigmaY: CiantisTheme.blurLight,
+            sigmaX:
+                CiantisTheme.blurLight,
+            sigmaY:
+                CiantisTheme.blurLight,
           ),
           child: Container(
-            height: CiantisTheme.bottomBarHeight,
+            height:
+                CiantisTheme.bottomBarHeight,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(CiantisTheme.glassOpacity),
-              borderRadius: BorderRadius.circular(CiantisTheme.radiusLarge),
+              color: Colors.white.withOpacity(
+                CiantisTheme.glassOpacity,
+              ),
+              borderRadius:
+                  BorderRadius.circular(
+                CiantisTheme.radiusLarge,
+              ),
               border: Border.all(
-                color: Colors.white.withOpacity(
-                  CiantisTheme.glassBorderOpacity,
+                color: Colors.white
+                    .withOpacity(
+                  CiantisTheme
+                      .glassBorderOpacity,
                 ),
               ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceEvenly,
               children: [
-                const Icon(Icons.home_outlined, color: CiantisTheme.white),
-                const Icon(Icons.favorite_border, color: CiantisTheme.white),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      showGridMenu = !showGridMenu;
-                    });
+                ...bottomNavItems.map(
+                  (item) {
+                    // CENTER BUTTON
+                    if (item.title ==
+                        'Calendar') {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showGridMenu =
+                                !showGridMenu;
+                          });
+                        },
+                        child: Container(
+                          height: 56,
+                          width: 56,
+                          decoration:
+                              BoxDecoration(
+                            color:
+                                CiantisTheme
+                                    .white,
+                            borderRadius:
+                                BorderRadius.circular(
+                              20,
+                            ),
+                          ),
+                          child: Icon(
+                            showGridMenu
+                                ? Icons
+                                    .close_rounded
+                                : Icons
+                                    .apps_rounded,
+                            color:
+                                CiantisTheme
+                                    .deepBrown,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Icon(
+                      item.icon,
+                      color:
+                          CiantisTheme.white,
+                    );
                   },
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    decoration: BoxDecoration(
-                      color: CiantisTheme.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Icon(
-                      showGridMenu ? Icons.close_rounded : Icons.apps_rounded,
-                      color: CiantisTheme.deepBrown,
-                    ),
-                  ),
                 ),
-                const Icon(
-                  Icons.calendar_month_outlined,
-                  color: CiantisTheme.white,
-                ),
-                const Icon(Icons.person_outline, color: CiantisTheme.white),
               ],
             ),
           ),
@@ -321,29 +409,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
       backgroundColor: Colors.transparent,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(CiantisTheme.radiusDrawer),
-          bottomRight: Radius.circular(CiantisTheme.radiusDrawer),
+          topRight: Radius.circular(
+            CiantisTheme.radiusDrawer,
+          ),
+          bottomRight: Radius.circular(
+            CiantisTheme.radiusDrawer,
+          ),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: CiantisTheme.blurHeavy,
-            sigmaY: CiantisTheme.blurHeavy,
+            sigmaX:
+                CiantisTheme.blurHeavy,
+            sigmaY:
+                CiantisTheme.blurHeavy,
           ),
           child: Container(
-            color: Colors.brown.withOpacity(.35),
+            color:
+                Colors.brown.withOpacity(.35),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding:
+                    const EdgeInsets.all(24),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     _sideProfileHeader(),
                     const SizedBox(height: 40),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: sideMenuItems.length,
-                        itemBuilder: (context, index) {
-                          final item = sideMenuItems[index];
+                        itemCount:
+                            sideMenuItems.length,
+                        itemBuilder:
+                            (context, index) {
+
+                          final item =
+                              sideMenuItems[
+                                  index];
 
                           return _menuItem(
                             item.icon,
@@ -367,7 +469,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         CircleAvatar(
           radius: 34,
-          backgroundColor: CiantisTheme.profileBrown,
+          backgroundColor:
+              CiantisTheme.profileBrown,
           child: const Icon(
             Icons.person,
             color: CiantisTheme.white,
@@ -376,21 +479,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         const SizedBox(width: 16),
         const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
           children: [
             Text(
               'the life',
               style: TextStyle(
                 color: CiantisTheme.white,
-                fontSize: CiantisTheme.titleSize,
-                fontWeight: FontWeight.w300,
+                fontSize:
+                    CiantisTheme.titleSize,
+                fontWeight:
+                    FontWeight.w300,
               ),
             ),
             SizedBox(height: 4),
             Text(
               'I\'M BUILDING',
               style: TextStyle(
-                color: CiantisTheme.whiteSoft,
+                color:
+                    CiantisTheme.whiteSoft,
                 letterSpacing: 2,
                 fontSize: 12,
               ),
@@ -401,19 +508,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _menuItem(IconData icon, String title) {
+  Widget _menuItem(
+    IconData icon,
+    String title,
+  ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22),
+      padding:
+          const EdgeInsets.only(bottom: 22),
       child: Row(
         children: [
-          Icon(icon, color: CiantisTheme.white, size: 24),
+          Icon(
+            icon,
+            color: CiantisTheme.white,
+            size: 24,
+          ),
           const SizedBox(width: 16),
           Text(
             title,
             style: const TextStyle(
               color: CiantisTheme.white,
               fontSize: 17,
-              fontWeight: FontWeight.w300,
+              fontWeight:
+                  FontWeight.w300,
             ),
           ),
         ],
