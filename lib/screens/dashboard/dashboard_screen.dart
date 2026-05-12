@@ -84,7 +84,7 @@ class _DashboardScreenState
                                       .start,
                               children: [
 
-                                // HOME PANEL
+                                // HOME
                                 const HomePanel(),
 
                                 const LuxurySectionSpacing(),
@@ -145,6 +145,8 @@ class _DashboardScreenState
                                             'Tasks Completed',
                                         value:
                                             '12',
+                                        progress:
+                                            .82,
                                         icon:
                                             Icons.check_circle_outline,
                                       ),
@@ -159,6 +161,8 @@ class _DashboardScreenState
                                             'Water Intake',
                                         value:
                                             '84%',
+                                        progress:
+                                            .84,
                                         icon:
                                             Icons.water_drop_outlined,
                                       ),
@@ -173,6 +177,8 @@ class _DashboardScreenState
                                             'Focus Score',
                                         value:
                                             '91%',
+                                        progress:
+                                            .91,
                                         icon:
                                             Icons.psychology_outlined,
                                       ),
@@ -187,6 +193,8 @@ class _DashboardScreenState
                                             'Mood',
                                         value:
                                             'Calm',
+                                        progress:
+                                            .72,
                                         icon:
                                             Icons.spa_outlined,
                                       ),
