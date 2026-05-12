@@ -5,6 +5,7 @@ import '../../theme/ciantis_theme.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/grid_menu.dart';
 import '../../widgets/home_panel.dart';
+import '../../widgets/horizontal_card_scroll.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
@@ -70,7 +71,6 @@ class _DashboardScreenState
                   },
                 ),
 
-                // CONTENT
                 Expanded(
                   child: showGridMenu
                       ? const GridMenu()
@@ -94,61 +94,63 @@ class _DashboardScreenState
                                       'Today',
                                 ),
 
-                                GridView.count(
-                                  crossAxisCount:
-                                      2,
-
-                                  shrinkWrap:
-                                      true,
-
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
-
-                                  crossAxisSpacing:
-                                      16,
-
-                                  mainAxisSpacing:
-                                      16,
-
-                                  childAspectRatio:
-                                      1.2,
-
+                                HorizontalCardScroll(
                                   children: const [
 
-                                    StatCard(
-                                      title:
-                                          'Tasks Completed',
-                                      value:
-                                          '12',
-                                      icon: Icons
-                                          .check_circle_outline,
+                                    SizedBox(
+                                      width:
+                                          170,
+                                      child:
+                                          StatCard(
+                                        title:
+                                            'Tasks Completed',
+                                        value:
+                                            '12',
+                                        icon:
+                                            Icons.check_circle_outline,
+                                      ),
                                     ),
 
-                                    StatCard(
-                                      title:
-                                          'Water Intake',
-                                      value:
-                                          '84%',
-                                      icon: Icons
-                                          .water_drop_outlined,
+                                    SizedBox(
+                                      width:
+                                          170,
+                                      child:
+                                          StatCard(
+                                        title:
+                                            'Water Intake',
+                                        value:
+                                            '84%',
+                                        icon:
+                                            Icons.water_drop_outlined,
+                                      ),
                                     ),
 
-                                    StatCard(
-                                      title:
-                                          'Focus Score',
-                                      value:
-                                          '91%',
-                                      icon: Icons
-                                          .psychology_outlined,
+                                    SizedBox(
+                                      width:
+                                          170,
+                                      child:
+                                          StatCard(
+                                        title:
+                                            'Focus Score',
+                                        value:
+                                            '91%',
+                                        icon:
+                                            Icons.psychology_outlined,
+                                      ),
                                     ),
 
-                                    StatCard(
-                                      title:
-                                          'Mood',
-                                      value:
-                                          'Calm',
-                                      icon: Icons
-                                          .spa_outlined,
+                                    SizedBox(
+                                      width:
+                                          170,
+                                      child:
+                                          StatCard(
+                                        title:
+                                            'Mood',
+                                        value:
+                                            'Calm',
+                                        icon:
+                                            Icons.spa_outlined,
+                                      ),
                                     ),
                                   ],
                                 ),
