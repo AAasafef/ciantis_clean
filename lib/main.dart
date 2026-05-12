@@ -5,10 +5,11 @@ import 'theme/ciantis_theme.dart';
 import 'data/app_items.dart';
 import 'data/side_menu_items.dart';
 
-import 'widgets/glass_container.dart';
 import 'widgets/app_icon_tile.dart';
-import 'widgets/side_menu_item_tile.dart';
 import 'widgets/bottom_nav_bar.dart';
+import 'widgets/glass_container.dart';
+import 'widgets/home_panel.dart';
+import 'widgets/side_menu_item_tile.dart';
 import 'widgets/top_bar.dart';
 
 void main() {
@@ -50,7 +51,9 @@ class _DashboardScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+
       drawer: _sideMenu(),
+
       body: Stack(
         children: [
 
@@ -85,7 +88,7 @@ class _DashboardScreenState
 
                 // HOME PANEL
                 if (!showGridMenu)
-                  _homePanel(),
+                  const HomePanel(),
 
                 // GRID MENU
                 if (showGridMenu)
@@ -129,64 +132,6 @@ class _DashboardScreenState
     return Container(
       color: Colors.black.withOpacity(
         CiantisTheme.overlayOpacity,
-      ),
-    );
-  }
-
-  // HOME PANEL
-  Widget _homePanel() {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 24,
-      ),
-      child: const GlassContainer(
-        child: Column(
-          mainAxisSize:
-              MainAxisSize.min,
-          crossAxisAlignment:
-              CrossAxisAlignment
-                  .start,
-          children: [
-
-            Text(
-              'Welcome back',
-              style: TextStyle(
-                color: CiantisTheme
-                    .whiteSoft,
-                fontSize: 14,
-              ),
-            ),
-
-            SizedBox(height: 8),
-
-            Text(
-              'Your luxury life OS',
-              style: TextStyle(
-                color:
-                    CiantisTheme.white,
-                fontSize:
-                    CiantisTheme
-                        .titleSize,
-                fontWeight:
-                    FontWeight.w300,
-              ),
-            ),
-
-            SizedBox(height: 12),
-
-            Text(
-              'Everything organized beautifully.',
-              style: TextStyle(
-                color: CiantisTheme
-                    .whiteSoft,
-                fontSize:
-                    CiantisTheme
-                        .bodySize,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -279,7 +224,7 @@ class _DashboardScreenState
               height: 24,
             ),
 
-            // APP GRID
+            // APPS
             Expanded(
               child:
                   GridView.builder(
