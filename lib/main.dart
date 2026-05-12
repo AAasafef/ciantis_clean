@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'theme/ciantis_theme.dart';
-
 import 'screens/dashboard/dashboard_screen.dart';
 
 void main() {
