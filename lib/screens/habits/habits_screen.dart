@@ -13,6 +13,7 @@ import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
 import '../../widgets/luxury_text_field.dart';
 import '../../widgets/page_header.dart';
+import '../../widgets/search_bar_widget.dart';
 import '../../widgets/section_title.dart';
 import '../../widgets/task_tile.dart';
 
@@ -27,12 +28,36 @@ class HabitsScreen extends StatefulWidget {
 class _HabitsScreenState
     extends State<HabitsScreen> {
 
+  final TextEditingController
+      searchController =
+      TextEditingController();
+
+  String searchQuery = '';
+
+  @override
+  void dispose() {
+    searchController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final tasks =
         TasksService.instance
-            .getTasks();
+            .getTasks()
+
+            .where(
+              (task) =>
+                  task.title
+                      .toLowerCase()
+                      .contains(
+                        searchQuery
+                            .toLowerCase(),
+                      ),
+            )
+            .toList();
 
     return CiantisScreenShell(
       child: LuxuryPagePadding(
@@ -47,6 +72,21 @@ class _HabitsScreenState
                 title: 'Habits',
                 subtitle:
                     'Build consistency and daily discipline.',
+              ),
+
+              const LuxurySectionSpacing(),
+
+              // SEARCH
+              SearchBarWidget(
+                controller:
+                    searchController,
+
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery =
+                        value;
+                  });
+                },
               ),
 
               const LuxurySectionSpacing(),
@@ -77,10 +117,10 @@ class _HabitsScreenState
                   icon:
                       Icons.check_circle_outline,
 
-                  title: 'No Habits Yet',
+                  title: 'No Habits Found',
 
                   subtitle:
-                      'Create routines that help build your dream life.',
+                      'Try adding a habit or changing your search.',
                 )
 
               else
