@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../theme/ciantis_theme.dart';
 
 import 'glass_container.dart';
-import 'luxury_divider.dart';
 
 class LuxuryCard extends StatelessWidget {
   final IconData icon;
@@ -31,6 +30,7 @@ class LuxuryCard extends StatelessWidget {
       padding: const EdgeInsets.only(
         bottom: 16,
       ),
+
       child: GestureDetector(
         onTap: onTap,
 
@@ -42,66 +42,73 @@ class LuxuryCard extends StatelessWidget {
           borderRadius:
               CiantisTheme.radiusLarge,
 
-          child: Column(
+          child: Row(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+
             children: [
 
-              Row(
-                children: [
-
-                  Icon(
-                    icon,
-                    color:
-                        CiantisTheme.white,
-                    size: 30,
-                  ),
-
-                  const SizedBox(width: 16),
-
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment
-                              .start,
-                      children: [
-
-                        Text(
-                          title,
-                          style:
-                              const TextStyle(
-                            color:
-                                CiantisTheme
-                                    .white,
-                            fontSize: 18,
-                            fontWeight:
-                                FontWeight
-                                    .w300,
-                          ),
-                        ),
-
-                        const SizedBox(
-                          height: 5,
-                        ),
-
-                        Text(
-                          subtitle,
-                          style:
-                              const TextStyle(
-                            color:
-                                CiantisTheme
-                                    .whiteSoft,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  if (trailing != null)
-                    trailing!,
-                ],
+              // ICON
+              Icon(
+                icon,
+                color:
+                    CiantisTheme.white,
+                size: 30,
               ),
 
-              const LuxuryDivider(),
+              const SizedBox(width: 16),
+
+              // TEXT
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment
+                          .start,
+
+                  children: [
+
+                    Text(
+                      title,
+                      style:
+                          const TextStyle(
+                        color:
+                            CiantisTheme
+                                .white,
+
+                        fontSize: 18,
+
+                        fontWeight:
+                            FontWeight
+                                .w300,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 6,
+                    ),
+
+                    Text(
+                      subtitle,
+                      style:
+                          const TextStyle(
+                        color:
+                            CiantisTheme
+                                .whiteSoft,
+
+                        fontSize: 13,
+
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 16),
+
+              // TRAILING
+              if (trailing != null)
+                trailing!,
             ],
           ),
         ),
