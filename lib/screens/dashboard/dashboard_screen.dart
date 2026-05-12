@@ -9,7 +9,9 @@ import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
 import '../../widgets/quote_card.dart';
+import '../../widgets/section_title.dart';
 import '../../widgets/side_menu.dart';
+import '../../widgets/stat_card.dart';
 import '../../widgets/top_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -86,7 +88,74 @@ class _DashboardScreenState
 
                                 const LuxurySectionSpacing(),
 
-                                // QUOTE
+                                // STATS
+                                const SectionTitle(
+                                  title:
+                                      'Today',
+                                ),
+
+                                GridView.count(
+                                  crossAxisCount:
+                                      2,
+
+                                  shrinkWrap:
+                                      true,
+
+                                  physics:
+                                      const NeverScrollableScrollPhysics(),
+
+                                  crossAxisSpacing:
+                                      16,
+
+                                  mainAxisSpacing:
+                                      16,
+
+                                  childAspectRatio:
+                                      1.2,
+
+                                  children: const [
+
+                                    StatCard(
+                                      title:
+                                          'Tasks Completed',
+                                      value:
+                                          '12',
+                                      icon: Icons
+                                          .check_circle_outline,
+                                    ),
+
+                                    StatCard(
+                                      title:
+                                          'Water Intake',
+                                      value:
+                                          '84%',
+                                      icon: Icons
+                                          .water_drop_outlined,
+                                    ),
+
+                                    StatCard(
+                                      title:
+                                          'Focus Score',
+                                      value:
+                                          '91%',
+                                      icon: Icons
+                                          .psychology_outlined,
+                                    ),
+
+                                    StatCard(
+                                      title:
+                                          'Mood',
+                                      value:
+                                          'Calm',
+                                      icon: Icons
+                                          .spa_outlined,
+                                    ),
+                                  ],
+                                ),
+
+                                const LuxurySectionSpacing(),
+
+                                // QUOTES
                                 const QuoteCard(
                                   quote:
                                       'Your future is built by what you do repeatedly.',
@@ -96,7 +165,6 @@ class _DashboardScreenState
 
                                 const LuxurySectionSpacing(),
 
-                                // SECOND CARD
                                 const QuoteCard(
                                   quote:
                                       'Luxury is peace, organization, clarity, and control.',
