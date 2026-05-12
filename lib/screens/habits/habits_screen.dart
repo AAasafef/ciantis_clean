@@ -5,6 +5,7 @@ import '../../models/task_model.dart';
 import '../../services/tasks_service.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
+import '../../widgets/empty_state_card.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_dialog.dart';
 import '../../widgets/luxury_page_padding.dart';
@@ -71,32 +72,44 @@ class _HabitsScreenState
                 title: 'Daily Habits',
               ),
 
-              ...tasks.map(
-                (task) =>
-                    TaskTile(
-                  task: task,
+              if (tasks.isEmpty)
+                const EmptyStateCard(
+                  icon:
+                      Icons.check_circle_outline,
 
-                  onToggle: () {
+                  title: 'No Habits Yet',
 
-                    TasksService.instance
-                        .toggleTask(
-                      task.id,
-                    );
+                  subtitle:
+                      'Create routines that help build your dream life.',
+                )
 
-                    setState(() {});
-                  },
+              else
+                ...tasks.map(
+                  (task) =>
+                      TaskTile(
+                    task: task,
 
-                  onDelete: () {
+                    onToggle: () {
 
-                    TasksService.instance
-                        .deleteTask(
-                      task.id,
-                    );
+                      TasksService.instance
+                          .toggleTask(
+                        task.id,
+                      );
 
-                    setState(() {});
-                  },
+                      setState(() {});
+                    },
+
+                    onDelete: () {
+
+                      TasksService.instance
+                          .deleteTask(
+                        task.id,
+                      );
+
+                      setState(() {});
+                    },
+                  ),
                 ),
-              ),
 
               const LuxurySectionSpacing(
                 height: 120,
