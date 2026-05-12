@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'theme/ciantis_theme.dart';
 
-import 'data/app_items.dart';
 import 'data/side_menu_items.dart';
 
-import 'widgets/app_icon_tile.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/glass_container.dart';
+import 'widgets/grid_menu.dart';
 import 'widgets/home_panel.dart';
 import 'widgets/side_menu_item_tile.dart';
 import 'widgets/top_bar.dart';
@@ -92,7 +91,7 @@ class _DashboardScreenState
 
                 // GRID MENU
                 if (showGridMenu)
-                  _gridMenu(),
+                  const GridMenu(),
 
                 const SizedBox(
                   height: 110,
@@ -132,138 +131,6 @@ class _DashboardScreenState
     return Container(
       color: Colors.black.withOpacity(
         CiantisTheme.overlayOpacity,
-      ),
-    );
-  }
-
-  // GRID MENU
-  Widget _gridMenu() {
-    return Expanded(
-      child: Container(
-        margin:
-            const EdgeInsets.only(
-          top: 10,
-        ),
-        padding:
-            const EdgeInsets.symmetric(
-          horizontal:
-              CiantisTheme
-                  .pagePadding,
-          vertical: 18,
-        ),
-        decoration:
-            const BoxDecoration(
-          color:
-              CiantisTheme
-                  .creamPanel,
-          borderRadius:
-              BorderRadius.only(
-            topLeft:
-                Radius.circular(
-              CiantisTheme
-                  .radiusSheet,
-            ),
-            topRight:
-                Radius.circular(
-              CiantisTheme
-                  .radiusSheet,
-            ),
-          ),
-        ),
-        child: Column(
-          children: [
-
-            // DRAG BAR
-            Container(
-              height: 5,
-              width: 50,
-              decoration:
-                  BoxDecoration(
-                color: Colors.brown,
-                borderRadius:
-                    BorderRadius
-                        .circular(
-                  20,
-                ),
-              ),
-            ),
-
-            const SizedBox(
-              height: 24,
-            ),
-
-            // SEARCH
-            TextField(
-              decoration:
-                  InputDecoration(
-                filled: true,
-                fillColor:
-                    CiantisTheme
-                        .white,
-                hintText:
-                    'Search anything...',
-                prefixIcon:
-                    const Icon(
-                  Icons.search,
-                ),
-                border:
-                    OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius
-                          .circular(
-                    18,
-                  ),
-                  borderSide:
-                      BorderSide
-                          .none,
-                ),
-              ),
-            ),
-
-            const SizedBox(
-              height: 24,
-            ),
-
-            // APPS
-            Expanded(
-              child:
-                  GridView.builder(
-                itemCount:
-                    ciantisApps
-                        .length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      4,
-                  crossAxisSpacing:
-                      14,
-                  mainAxisSpacing:
-                      18,
-                  childAspectRatio:
-                      .82,
-                ),
-                itemBuilder:
-                    (
-                  context,
-                  index,
-                ) {
-
-                  final app =
-                      ciantisApps[
-                          index];
-
-                  return AppIconTile(
-                    title:
-                        app.title,
-                    icon:
-                        app.icon,
-                    onTap: () {},
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
