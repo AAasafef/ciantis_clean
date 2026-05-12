@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../theme/ciantis_theme.dart';
+import '../models/profile_model.dart';
 
-import '../data/side_menu_items.dart';
+import '../services/profile_service.dart';
+
+import '../theme/ciantis_theme.dart';
 
 import 'glass_container.dart';
 import 'luxury_avatar.dart';
@@ -13,6 +15,11 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final ProfileModel profile =
+        ProfileService.instance
+            .getProfile();
+
     return Drawer(
       backgroundColor: Colors.transparent,
 
@@ -31,7 +38,61 @@ class SideMenu extends StatelessWidget {
 
             children: [
 
-              _profileHeader(),
+              // PROFILE
+              Row(
+                children: [
+
+                  LuxuryAvatar(
+                    imagePath:
+                        profile.avatarPath,
+                  ),
+
+                  const SizedBox(width: 16),
+
+                  Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment
+                            .start,
+
+                    children: [
+
+                      Text(
+                        profile.name,
+                        style:
+                            const TextStyle(
+                          color:
+                              CiantisTheme
+                                  .white,
+                          fontSize:
+                              CiantisTheme
+                                  .titleSize,
+                          fontWeight:
+                              FontWeight
+                                  .w300,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 4,
+                      ),
+
+                      Text(
+                        profile.subtitle,
+                        style:
+                            const TextStyle(
+                          color:
+                              CiantisTheme
+                                  .whiteSoft,
+                          letterSpacing:
+                              2,
+                          fontSize:
+                              12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 40),
 
@@ -40,30 +101,32 @@ class SideMenu extends StatelessWidget {
                   children: [
 
                     SideMenuItemTile(
-                      icon: Icons.home_outlined,
+                      icon:
+                          Icons.home_outlined,
                       title: 'Dashboard',
                       badgeCount: '2',
                       onTap: () {},
                     ),
 
                     SideMenuItemTile(
-                      icon:
-                          Icons.notifications_none,
-                      title: 'Notifications',
+                      icon: Icons
+                          .notifications_none,
+                      title:
+                          'Notifications',
                       badgeCount: '5',
                       onTap: () {},
                     ),
 
                     SideMenuItemTile(
-                      icon:
-                          Icons.favorite_border,
+                      icon: Icons
+                          .favorite_border,
                       title: 'Goals',
                       onTap: () {},
                     ),
 
                     SideMenuItemTile(
-                      icon:
-                          Icons.settings_outlined,
+                      icon: Icons
+                          .settings_outlined,
                       title: 'Settings',
                       onTap: () {},
                     ),
@@ -81,49 +144,6 @@ class SideMenu extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // PROFILE HEADER
-  Widget _profileHeader() {
-    return Row(
-      children: [
-
-        const LuxuryAvatar(),
-
-        const SizedBox(width: 16),
-
-        const Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
-
-          children: [
-
-            Text(
-              'the life',
-              style: TextStyle(
-                color: CiantisTheme.white,
-                fontSize:
-                    CiantisTheme.titleSize,
-                fontWeight:
-                    FontWeight.w300,
-              ),
-            ),
-
-            SizedBox(height: 4),
-
-            Text(
-              'I\'M BUILDING',
-              style: TextStyle(
-                color:
-                    CiantisTheme.whiteSoft,
-                letterSpacing: 2,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
