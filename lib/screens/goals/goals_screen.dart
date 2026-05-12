@@ -5,6 +5,7 @@ import '../../models/goal_model.dart';
 import '../../services/goals_service.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
+import '../../widgets/delete_icon_button.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
 import '../../widgets/luxury_dialog.dart';
@@ -117,9 +118,28 @@ class _GoalsScreenState
 
       subtitle: goal.subtitle,
 
-      trailing: ProgressRing(
-        text:
-            '${(goal.progress * 100).toInt()}%',
+      trailing: Column(
+        children: [
+
+          ProgressRing(
+            text:
+                '${(goal.progress * 100).toInt()}%',
+          ),
+
+          const SizedBox(height: 12),
+
+          DeleteIconButton(
+            onPressed: () {
+
+              GoalsService.instance
+                  .deleteGoal(
+                goal.id,
+              );
+
+              setState(() {});
+            },
+          ),
+        ],
       ),
     );
   }
