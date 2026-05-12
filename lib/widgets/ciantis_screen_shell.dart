@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/ciantis_theme.dart';
 
 import 'bottom_nav_bar.dart';
+import 'luxury_app_bar_spacing.dart';
 import 'side_menu.dart';
 import 'top_bar.dart';
 
@@ -21,7 +22,9 @@ class CiantisScreenShell extends StatefulWidget {
 
 class _CiantisScreenShellState
     extends State<CiantisScreenShell> {
-  final GlobalKey<ScaffoldState> scaffoldKey =
+
+  final GlobalKey<ScaffoldState>
+      scaffoldKey =
       GlobalKey<ScaffoldState>();
 
   bool showGridMenu = false;
@@ -30,45 +33,69 @@ class _CiantisScreenShellState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+
       drawer: const SideMenu(),
+
       body: Stack(
         children: [
+
+          // BACKGROUND
           Container(
             decoration: const BoxDecoration(
-              gradient: CiantisTheme.mainGradient,
+              gradient:
+                  CiantisTheme.mainGradient,
             ),
           ),
+
+          // OVERLAY
           Container(
             color: Colors.black.withOpacity(
               CiantisTheme.overlayOpacity,
             ),
           ),
+
           SafeArea(
             child: Column(
               children: [
+
+                // TOP BAR
                 TopBar(
-                  showGridMenu: showGridMenu,
+                  showGridMenu:
+                      showGridMenu,
+
                   onMenuPressed: () {
-                    scaffoldKey.currentState?.openDrawer();
+                    scaffoldKey
+                        .currentState
+                        ?.openDrawer();
                   },
+
                   onGridPressed: () {
                     setState(() {
-                      showGridMenu = !showGridMenu;
+                      showGridMenu =
+                          !showGridMenu;
                     });
                   },
                 ),
+
+                const LuxuryAppBarSpacing(),
+
+                // PAGE CONTENT
                 Expanded(
                   child: widget.child,
                 ),
-                const SizedBox(height: 110),
               ],
             ),
           ),
+
+          // BOTTOM BAR
           BottomNavBar(
-            showGridMenu: showGridMenu,
+            showGridMenu:
+                showGridMenu,
+
             onMenuPressed: () {
               setState(() {
-                showGridMenu = !showGridMenu;
+                showGridMenu =
+                    !showGridMenu;
               });
             },
           ),
