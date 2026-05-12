@@ -7,6 +7,7 @@ import 'data/side_menu_items.dart';
 import 'data/bottom_nav_items.dart';
 
 import 'widgets/glass_container.dart';
+import 'widgets/app_icon_tile.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -36,7 +37,9 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState
     extends State<DashboardScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey =
+
+  final GlobalKey<ScaffoldState>
+      scaffoldKey =
       GlobalKey<ScaffoldState>();
 
   bool showGridMenu = false;
@@ -48,12 +51,19 @@ class _DashboardScreenState
       drawer: _sideMenu(),
       body: Stack(
         children: [
+
+          // BACKGROUND
           _background(),
+
+          // OVERLAY
           _overlay(),
+
           SafeArea(
             child: Column(
               children: [
+
                 _topBar(),
+
                 const Spacer(),
 
                 if (!showGridMenu)
@@ -62,11 +72,14 @@ class _DashboardScreenState
                 if (showGridMenu)
                   _gridMenu(),
 
-                const SizedBox(height: 110),
+                const SizedBox(
+                  height: 110,
+                ),
               ],
             ),
           ),
 
+          // BOTTOM BAR
           _bottomTaskbar(),
         ],
       ),
@@ -77,7 +90,8 @@ class _DashboardScreenState
   Widget _background() {
     return Container(
       decoration: const BoxDecoration(
-        gradient: CiantisTheme.mainGradient,
+        gradient:
+            CiantisTheme.mainGradient,
       ),
     );
   }
@@ -94,16 +108,19 @@ class _DashboardScreenState
   // TOP BAR
   Widget _topBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CiantisTheme.pagePadding,
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal:
+            CiantisTheme.pagePadding,
         vertical: 10,
       ),
       child: Row(
         mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+            MainAxisAlignment
+                .spaceBetween,
         children: [
 
-          // SIDE MENU
+          // SIDE MENU BUTTON
           GestureDetector(
             onTap: () {
               scaffoldKey.currentState
@@ -111,23 +128,28 @@ class _DashboardScreenState
             },
             child: const Icon(
               Icons.menu_rounded,
-              color: CiantisTheme.white,
+              color:
+                  CiantisTheme.white,
               size: 28,
             ),
           ),
 
+          // TITLE
           const Text(
             'the life',
             style: TextStyle(
-              color: CiantisTheme.white,
+              color:
+                  CiantisTheme.white,
               fontSize:
-                  CiantisTheme.appTitleSize,
-              fontWeight: FontWeight.w300,
+                  CiantisTheme
+                      .appTitleSize,
+              fontWeight:
+                  FontWeight.w300,
               letterSpacing: 1,
             ),
           ),
 
-          // GRID MENU
+          // GRID MENU BUTTON
           GestureDetector(
             onTap: () {
               setState(() {
@@ -137,9 +159,12 @@ class _DashboardScreenState
             },
             child: Icon(
               showGridMenu
-                  ? Icons.close_rounded
-                  : Icons.apps_rounded,
-              color: CiantisTheme.white,
+                  ? Icons
+                      .close_rounded
+                  : Icons
+                      .apps_rounded,
+              color:
+                  CiantisTheme.white,
               size: 28,
             ),
           ),
@@ -151,7 +176,8 @@ class _DashboardScreenState
   // HOME PANEL
   Widget _homePanel() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding:
+          const EdgeInsets.symmetric(
         horizontal: 24,
       ),
       child: const GlassContainer(
@@ -159,14 +185,15 @@ class _DashboardScreenState
           mainAxisSize:
               MainAxisSize.min,
           crossAxisAlignment:
-              CrossAxisAlignment.start,
+              CrossAxisAlignment
+                  .start,
           children: [
 
             Text(
               'Welcome back',
               style: TextStyle(
-                color:
-                    CiantisTheme.whiteSoft,
+                color: CiantisTheme
+                    .whiteSoft,
                 fontSize: 14,
               ),
             ),
@@ -179,7 +206,8 @@ class _DashboardScreenState
                 color:
                     CiantisTheme.white,
                 fontSize:
-                    CiantisTheme.titleSize,
+                    CiantisTheme
+                        .titleSize,
                 fontWeight:
                     FontWeight.w300,
               ),
@@ -190,10 +218,11 @@ class _DashboardScreenState
             Text(
               'Everything organized beautifully.',
               style: TextStyle(
-                color:
-                    CiantisTheme.whiteSoft,
+                color: CiantisTheme
+                    .whiteSoft,
                 fontSize:
-                    CiantisTheme.bodySize,
+                    CiantisTheme
+                        .bodySize,
               ),
             ),
           ],
@@ -206,25 +235,33 @@ class _DashboardScreenState
   Widget _gridMenu() {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.only(
+        margin:
+            const EdgeInsets.only(
           top: 10,
         ),
         padding:
             const EdgeInsets.symmetric(
           horizontal:
-              CiantisTheme.pagePadding,
+              CiantisTheme
+                  .pagePadding,
           vertical: 18,
         ),
-        decoration: const BoxDecoration(
+        decoration:
+            const BoxDecoration(
           color:
-              CiantisTheme.creamPanel,
+              CiantisTheme
+                  .creamPanel,
           borderRadius:
               BorderRadius.only(
-            topLeft: Radius.circular(
-              CiantisTheme.radiusSheet,
+            topLeft:
+                Radius.circular(
+              CiantisTheme
+                  .radiusSheet,
             ),
-            topRight: Radius.circular(
-              CiantisTheme.radiusSheet,
+            topRight:
+                Radius.circular(
+              CiantisTheme
+                  .radiusSheet,
             ),
           ),
         ),
@@ -235,23 +272,29 @@ class _DashboardScreenState
             Container(
               height: 5,
               width: 50,
-              decoration: BoxDecoration(
+              decoration:
+                  BoxDecoration(
                 color: Colors.brown,
                 borderRadius:
-                    BorderRadius.circular(
+                    BorderRadius
+                        .circular(
                   20,
                 ),
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(
+              height: 24,
+            ),
 
             // SEARCH
             TextField(
-              decoration: InputDecoration(
+              decoration:
+                  InputDecoration(
                 filled: true,
                 fillColor:
-                    CiantisTheme.white,
+                    CiantisTheme
+                        .white,
                 hintText:
                     'Search anything...',
                 prefixIcon:
@@ -261,78 +304,55 @@ class _DashboardScreenState
                 border:
                     OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(
+                      BorderRadius
+                          .circular(
                     18,
                   ),
                   borderSide:
-                      BorderSide.none,
+                      BorderSide
+                          .none,
                 ),
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(
+              height: 24,
+            ),
 
             // APP GRID
             Expanded(
-              child: GridView.builder(
+              child:
+                  GridView.builder(
                 itemCount:
-                    ciantisApps.length,
+                    ciantisApps
+                        .length,
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 18,
-                  childAspectRatio: .82,
+                  crossAxisCount:
+                      4,
+                  crossAxisSpacing:
+                      14,
+                  mainAxisSpacing:
+                      18,
+                  childAspectRatio:
+                      .82,
                 ),
                 itemBuilder:
-                    (context, index) {
+                    (
+                  context,
+                  index,
+                ) {
 
                   final app =
-                      ciantisApps[index];
+                      ciantisApps[
+                          index];
 
-                  return Column(
-                    children: [
-
-                      Container(
-                        height: 68,
-                        width: 68,
-                        decoration:
-                            BoxDecoration(
-                          color:
-                              CiantisTheme
-                                  .white,
-                          borderRadius:
-                              BorderRadius.circular(
-                            CiantisTheme
-                                .radiusMedium,
-                          ),
-                        ),
-                        child: Icon(
-                          app.icon,
-                          color:
-                              CiantisTheme
-                                  .warmBrown,
-                          size: 28,
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 8,
-                      ),
-
-                      Text(
+                  return AppIconTile(
+                    title:
                         app.title,
-                        style:
-                            const TextStyle(
-                          fontSize:
-                              CiantisTheme
-                                  .smallSize,
-                          color:
-                              CiantisTheme
-                                  .textBrown,
-                        ),
-                      ),
-                    ],
+                    icon:
+                        app.icon,
+                    onTap: () {},
                   );
                 },
               ),
@@ -352,11 +372,13 @@ class _DashboardScreenState
           .bottomBarBottomPadding,
       child: GlassContainer(
         borderRadius:
-            CiantisTheme.radiusLarge,
-        padding: EdgeInsets.zero,
+            CiantisTheme
+                .radiusLarge,
+        padding:
+            EdgeInsets.zero,
         child: SizedBox(
-          height:
-              CiantisTheme.bottomBarHeight,
+          height: CiantisTheme
+              .bottomBarHeight,
           child: Row(
             mainAxisAlignment:
                 MainAxisAlignment
@@ -376,7 +398,8 @@ class _DashboardScreenState
                               !showGridMenu;
                         });
                       },
-                      child: Container(
+                      child:
+                          Container(
                         height: 56,
                         width: 56,
                         decoration:
@@ -425,9 +448,12 @@ class _DashboardScreenState
           Colors.transparent,
       child: GlassContainer(
         borderRadius:
-            CiantisTheme.radiusDrawer,
+            CiantisTheme
+                .radiusDrawer,
         padding:
-            const EdgeInsets.all(24),
+            const EdgeInsets.all(
+          24,
+        ),
         child: SafeArea(
           child: Column(
             crossAxisAlignment:
@@ -442,11 +468,16 @@ class _DashboardScreenState
               ),
 
               Expanded(
-                child: ListView.builder(
+                child:
+                    ListView.builder(
                   itemCount:
-                      sideMenuItems.length,
+                      sideMenuItems
+                          .length,
                   itemBuilder:
-                      (context, index) {
+                      (
+                    context,
+                    index,
+                  ) {
 
                     final item =
                         sideMenuItems[
@@ -466,7 +497,7 @@ class _DashboardScreenState
     );
   }
 
-  // PROFILE HEADER
+  // PROFILE
   Widget _sideProfileHeader() {
     return Row(
       children: [
@@ -479,12 +510,15 @@ class _DashboardScreenState
           child: const Icon(
             Icons.person,
             color:
-                CiantisTheme.white,
+                CiantisTheme
+                    .white,
             size: 34,
           ),
         ),
 
-        const SizedBox(width: 16),
+        const SizedBox(
+          width: 16,
+        ),
 
         const Column(
           crossAxisAlignment:
@@ -496,7 +530,8 @@ class _DashboardScreenState
               'the life',
               style: TextStyle(
                 color:
-                    CiantisTheme.white,
+                    CiantisTheme
+                        .white,
                 fontSize:
                     CiantisTheme
                         .titleSize,
@@ -505,13 +540,16 @@ class _DashboardScreenState
               ),
             ),
 
-            SizedBox(height: 4),
+            SizedBox(
+              height: 4,
+            ),
 
             Text(
               'I\'M BUILDING',
               style: TextStyle(
-                color: CiantisTheme
-                    .whiteSoft,
+                color:
+                    CiantisTheme
+                        .whiteSoft,
                 letterSpacing: 2,
                 fontSize: 12,
               ),
@@ -542,13 +580,16 @@ class _DashboardScreenState
             size: 24,
           ),
 
-          const SizedBox(width: 16),
+          const SizedBox(
+            width: 16,
+          ),
 
           Text(
             title,
             style: const TextStyle(
               color:
-                  CiantisTheme.white,
+                  CiantisTheme
+                      .white,
               fontSize: 17,
               fontWeight:
                   FontWeight.w300,
