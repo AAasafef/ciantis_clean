@@ -6,6 +6,7 @@ import '../../services/goals_service.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/delete_icon_button.dart';
+import '../../widgets/edit_icon_button.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
 import '../../widgets/luxury_dialog.dart';
@@ -128,16 +129,34 @@ class _GoalsScreenState
 
           const SizedBox(height: 12),
 
-          DeleteIconButton(
-            onPressed: () {
+          Row(
+            mainAxisSize:
+                MainAxisSize.min,
+            children: [
 
-              GoalsService.instance
-                  .deleteGoal(
-                goal.id,
-              );
+              EditIconButton(
+                onPressed: () {
+                  _showEditGoalDialog(
+                    context,
+                    goal,
+                  );
+                },
+              ),
 
-              setState(() {});
-            },
+              const SizedBox(width: 10),
+
+              DeleteIconButton(
+                onPressed: () {
+
+                  GoalsService.instance
+                      .deleteGoal(
+                    goal.id,
+                  );
+
+                  setState(() {});
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -225,6 +244,105 @@ class _GoalsScreenState
 
                       category:
                           'Daily Focus',
+                    ),
+                  );
+
+                  Navigator.pop(
+                    context,
+                  );
+
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // EDIT DIALOG
+  void _showEditGoalDialog(
+    BuildContext context,
+    GoalModel goal,
+  ) {
+
+    final titleController =
+        TextEditingController(
+      text: goal.title,
+    );
+
+    final subtitleController =
+        TextEditingController(
+      text: goal.subtitle,
+    );
+
+    showDialog(
+      context: context,
+
+      builder: (context) {
+        return LuxuryDialog(
+          title: 'Edit Goal',
+
+          subtitle:
+              'Update your focus or milestone.',
+
+          child: Column(
+            children: [
+
+              LuxuryTextField(
+                hintText:
+                    'Goal Title',
+
+                icon:
+                    Icons.flag_outlined,
+
+                controller:
+                    titleController,
+              ),
+
+              const SizedBox(
+                height: 16,
+              ),
+
+              LuxuryTextField(
+                hintText:
+                    'Description',
+
+                icon:
+                    Icons.edit_outlined,
+
+                controller:
+                    subtitleController,
+              ),
+
+              const SizedBox(
+                height: 24,
+              ),
+
+              LuxuryButton(
+                text: 'Update Goal',
+
+                icon:
+                    Icons.save_outlined,
+
+                onPressed: () {
+
+                  GoalsService.instance
+                      .deleteGoal(
+                    goal.id,
+                  );
+
+                  GoalsService.instance
+                      .addGoal(
+                    goal.copyWith(
+                      title:
+                          titleController
+                              .text,
+
+                      subtitle:
+                          subtitleController
+                              .text,
                     ),
                   );
 
