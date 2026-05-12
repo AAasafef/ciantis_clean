@@ -15,363 +15,486 @@ class CiantisApp extends StatelessWidget {
       title: 'Ciantis',
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF6F2EC),
-        fontFamily: 'Roboto',
+        scaffoldBackgroundColor: const Color(0xFFF6F0EA),
+        fontFamily: 'SF Pro Display',
       ),
-      home: const CiantisDashboard(),
+      home: const DashboardScreen(),
     );
   }
 }
 
-class CiantisDashboard extends StatefulWidget {
-  const CiantisDashboard({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<CiantisDashboard> createState() => _CiantisDashboardState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _CiantisDashboardState extends State<CiantisDashboard> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _DashboardScreenState extends State<DashboardScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
-  bool showAppDrawer = false;
+  bool showGridMenu = false;
 
-  final List<CiantisAppIcon> apps = const [
-    CiantisAppIcon('Calendar', Icons.calendar_month_rounded),
-    CiantisAppIcon('Health', Icons.favorite_rounded),
-    CiantisAppIcon('Food', Icons.restaurant_rounded),
-    CiantisAppIcon('Money', Icons.account_balance_wallet_rounded),
-    CiantisAppIcon('Goals', Icons.flag_rounded),
-    CiantisAppIcon('Tasks', Icons.check_circle_rounded),
-    CiantisAppIcon('Files', Icons.folder_rounded),
-    CiantisAppIcon('Books', Icons.menu_book_rounded),
-    CiantisAppIcon('Beauty', Icons.spa_rounded),
-    CiantisAppIcon('Shopping', Icons.shopping_bag_rounded),
-    CiantisAppIcon('Family', Icons.groups_rounded),
-    CiantisAppIcon('Settings', Icons.settings_rounded),
+  final List<Map<String, dynamic>> apps = [
+    {'title': 'Home', 'icon': Icons.home_outlined},
+    {'title': 'Goals', 'icon': Icons.favorite_border},
+    {'title': 'Habits', 'icon': Icons.check_circle_outline},
+    {'title': 'Journal', 'icon': Icons.menu_book_outlined},
+    {'title': 'Self Care', 'icon': Icons.spa_outlined},
+    {'title': 'Finances', 'icon': Icons.account_balance_wallet_outlined},
+    {'title': 'Education', 'icon': Icons.school_outlined},
+    {'title': 'Wellness', 'icon': Icons.monitor_heart_outlined},
+    {'title': 'Projects', 'icon': Icons.folder_outlined},
+    {'title': 'Calendar', 'icon': Icons.calendar_month_outlined},
+    {'title': 'Notes', 'icon': Icons.edit_note_outlined},
+    {'title': 'Resources', 'icon': Icons.widgets_outlined},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
 
       // SIDE SWIPE MENU
-      drawer: Drawer(
-        backgroundColor: const Color(0xFFF9F5EF),
-        child: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(18),
-            children: const [
-              Text(
-                'Ciantis',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+      drawer: _sideMenu(),
+
+      body: Stack(
+        children: [
+
+          // BACKGROUND
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF7A5A47),
+                  Color(0xFF9B7B66),
+                  Color(0xFFD8C2AE),
+                ],
               ),
-              SizedBox(height: 20),
-              ListTile(
-                leading: Icon(Icons.dashboard_rounded),
-                title: Text('Dashboard'),
-              ),
-              ListTile(
-                leading: Icon(Icons.calendar_month_rounded),
-                title: Text('Calendar'),
-              ),
-              ListTile(
-                leading: Icon(Icons.favorite_rounded),
-                title: Text('Health'),
-              ),
-              ListTile(
-                leading: Icon(Icons.folder_rounded),
-                title: Text('Important Files'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings_rounded),
-                title: Text('Settings'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
 
-      body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            _wallpaperBackground(),
+          // OVERLAY
+          Container(
+            color: Colors.black.withOpacity(.15),
+          ),
 
-            Column(
+          SafeArea(
+            child: Column(
               children: [
-                _topHeader(),
-                Expanded(
-                  child: showAppDrawer ? _appDrawerGrid() : _dashboardHome(),
-                ),
-              ],
-            ),
 
-            _bottomTaskbar(),
-          ],
-        ),
-      ),
-    );
-  }
+                // TOP BAR
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 22,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                    children: [
 
-  Widget _wallpaperBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFF8F2EA),
-            Color(0xFFE7D8C9),
-            Color(0xFFD8C1AD),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _topHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(22, 14, 22, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => _scaffoldKey.currentState?.openDrawer(),
-            child: const Icon(Icons.menu_rounded, size: 30),
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Text(
-              'Good morning, Shaverian',
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF2B211C),
-              ),
-            ),
-          ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: Color(0xFFEBDDD2),
-            child: Icon(Icons.person_rounded, color: Color(0xFF5D4638)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _dashboardHome() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(22, 10, 22, 110),
-      child: ListView(
-        children: [
-          _glassCard(
-            title: 'Today',
-            subtitle: 'Your calm command center',
-            icon: Icons.wb_sunny_rounded,
-          ),
-          const SizedBox(height: 18),
-          _glassCard(
-            title: 'Calendar',
-            subtitle: 'Appointments, reminders, family plans',
-            icon: Icons.calendar_month_rounded,
-          ),
-          const SizedBox(height: 18),
-          _glassCard(
-            title: 'Next Best Action',
-            subtitle: 'Open app drawer to choose a section',
-            icon: Icons.auto_awesome_rounded,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _glassCard({
-    required String title,
-    required String subtitle,
-    required IconData icon,
-  }) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-        child: Container(
-          padding: const EdgeInsets.all(22),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.48),
-            borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: Colors.white.withOpacity(0.65)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 22,
-                offset: const Offset(0, 12),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 58,
-                width: 58,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFB9967B),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Icon(icon, color: Colors.white, size: 30),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF2A211D),
+                      // SIDE MENU BUTTON
+                      GestureDetector(
+                        onTap: () {
+                          scaffoldKey.currentState?.openDrawer();
+                        },
+                        child: const Icon(
+                          Icons.menu_rounded,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF6E5B50),
+
+                      const Text(
+                        'the life',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
-  Widget _appDrawerGrid() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 14, 18, 115),
-      child: GridView.builder(
-        itemCount: apps.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // 4 apps across
-          mainAxisSpacing: 22,
-          crossAxisSpacing: 12,
-          childAspectRatio: 0.78,
-        ),
-        itemBuilder: (context, index) {
-          final app = apps[index];
-
-          return Column(
-            children: [
-              Container(
-                height: 62,
-                width: 62,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFD5B9A1),
-                      Color(0xFFA77F66),
+                      // GRID MENU BUTTON
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showGridMenu = !showGridMenu;
+                          });
+                        },
+                        child: Icon(
+                          showGridMenu
+                              ? Icons.close_rounded
+                              : Icons.apps_rounded,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.13),
-                      blurRadius: 12,
-                      offset: const Offset(0, 7),
+                ),
+
+                const Spacer(),
+
+                // HOME PANEL
+                if (!showGridMenu)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
                     ),
-                  ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 20,
+                          sigmaY: 20,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(.15),
+                            borderRadius:
+                                BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(.2),
+                            ),
+                          ),
+                          child: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+
+                              Text(
+                                'Welcome back',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+
+                              SizedBox(height: 8),
+
+                              Text(
+                                'Your luxury life OS',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+
+                              SizedBox(height: 12),
+
+                              Text(
+                                'Everything organized beautifully.',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                // GRID MENU
+                if (showGridMenu)
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 22,
+                        vertical: 18,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF5EEE7),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(34),
+                          topRight: Radius.circular(34),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+
+                          Container(
+                            height: 5,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.brown,
+                              borderRadius:
+                                  BorderRadius.circular(20),
+                            ),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // SEARCH
+                          TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Search anything...',
+                              prefixIcon:
+                                  const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(18),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // APP GRID
+                          Expanded(
+                            child: GridView.builder(
+                              itemCount: apps.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 14,
+                                mainAxisSpacing: 18,
+                                childAspectRatio: .82,
+                              ),
+                              itemBuilder: (context, index) {
+
+                                final app = apps[index];
+
+                                return Column(
+                                  children: [
+
+                                    Container(
+                                      height: 68,
+                                      width: 68,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20),
+                                      ),
+                                      child: Icon(
+                                        app['icon'],
+                                        color: const Color(
+                                            0xFF8D6748),
+                                        size: 28,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 8),
+
+                                    Text(
+                                      app['title'],
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xFF5D4638),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                const SizedBox(height: 110),
+              ],
+            ),
+          ),
+
+          // FLOATING TASKBAR
+          Positioned(
+            left: 24,
+            right: 24,
+            bottom: 30,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(28),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 20,
+                  sigmaY: 20,
                 ),
-                child: Icon(app.icon, color: Colors.white, size: 30),
-              ),
-              const SizedBox(height: 7),
-              Text(
-                app.name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF2C221D),
+                child: Container(
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(.15),
+                    borderRadius:
+                        BorderRadius.circular(28),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(.2),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceEvenly,
+                    children: [
+
+                      const Icon(
+                        Icons.home_outlined,
+                        color: Colors.white,
+                      ),
+
+                      const Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showGridMenu = !showGridMenu;
+                          });
+                        },
+                        child: Container(
+                          height: 56,
+                          width: 56,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.circular(20),
+                          ),
+                          child: Icon(
+                            showGridMenu
+                                ? Icons.close_rounded
+                                : Icons.apps_rounded,
+                            color: const Color(0xFF7B5A43),
+                          ),
+                        ),
+                      ),
+
+                      const Icon(
+                        Icons.calendar_month_outlined,
+                        color: Colors.white,
+                      ),
+
+                      const Icon(
+                        Icons.person_outline,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _bottomTaskbar() {
-    return Positioned(
-      left: 18,
-      right: 18,
-      bottom: 24, // keeps it above Android back/home nav bar
+  Widget _sideMenu() {
+    return Drawer(
+      backgroundColor: Colors.transparent,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(34),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+          filter: ImageFilter.blur(
+            sigmaX: 25,
+            sigmaY: 25,
+          ),
           child: Container(
-            height: 76,
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.58),
-              borderRadius: BorderRadius.circular(34),
-              border: Border.all(color: Colors.white.withOpacity(0.75)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.13),
-                  blurRadius: 24,
-                  offset: const Offset(0, 12),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _taskbarIcon(Icons.home_rounded, () {
-                  setState(() => showAppDrawer = false);
-                }),
+            color: Colors.brown.withOpacity(.35),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
 
-                _taskbarIcon(Icons.search_rounded, () {}),
+                    // PROFILE
+                    Row(
+                      children: [
 
-                // CENTER APP DRAWER BUTTON
-                GestureDetector(
-                  onTap: () {
-                    setState(() => showAppDrawer = !showAppDrawer);
-                  },
-                  child: Container(
-                    height: 58,
-                    width: 58,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2B211C),
-                      borderRadius: BorderRadius.circular(22),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.22),
-                          blurRadius: 18,
-                          offset: const Offset(0, 9),
+                        CircleAvatar(
+                          radius: 34,
+                          backgroundColor:
+                              const Color(0xFF8B5E4A),
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 34,
+                          ),
+                        ),
+
+                        const SizedBox(width: 16),
+
+                        const Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+
+                            Text(
+                              'the life',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight:
+                                    FontWeight.w300,
+                              ),
+                            ),
+
+                            SizedBox(height: 4),
+
+                            Text(
+                              'I\'M BUILDING',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                letterSpacing: 2,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    child: Icon(
-                      showAppDrawer
-                          ? Icons.close_rounded
-                          : Icons.grid_view_rounded,
-                      color: Colors.white,
-                      size: 30,
+
+                    const SizedBox(height: 40),
+
+                    _menuItem(
+                      Icons.home_outlined,
+                      'Home',
                     ),
-                  ),
+
+                    _menuItem(
+                      Icons.favorite_border,
+                      'Goals',
+                    ),
+
+                    _menuItem(
+                      Icons.check_circle_outline,
+                      'Habits',
+                    ),
+
+                    _menuItem(
+                      Icons.menu_book_outlined,
+                      'Journal',
+                    ),
+
+                    _menuItem(
+                      Icons.spa_outlined,
+                      'Self Care',
+                    ),
+
+                    _menuItem(
+                      Icons.settings_outlined,
+                      'Settings',
+                    ),
+                  ],
                 ),
-
-                _taskbarIcon(Icons.notifications_rounded, () {}),
-
-                _taskbarIcon(Icons.person_rounded, () {}),
-              ],
+              ),
             ),
           ),
         ),
@@ -379,21 +502,33 @@ class _CiantisDashboardState extends State<CiantisDashboard> {
     );
   }
 
-  Widget _taskbarIcon(IconData icon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        icon,
-        size: 29,
-        color: const Color(0xFF2B211C),
+  Widget _menuItem(
+    IconData icon,
+    String title,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 22),
+      child: Row(
+        children: [
+
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 24,
+          ),
+
+          const SizedBox(width: 16),
+
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ],
       ),
     );
   }
-}
-
-class CiantisAppIcon {
-  final String name;
-  final IconData icon;
-
-  const CiantisAppIcon(this.name, this.icon);
 }
