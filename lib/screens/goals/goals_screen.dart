@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
+import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
@@ -22,16 +23,25 @@ class GoalsScreen extends StatelessWidget {
               CrossAxisAlignment.start,
           children: [
 
-            // PAGE HEADER
+            // HEADER
             const PageHeader(
               title: 'Goals',
               subtitle:
                   'Build the future you want.',
             ),
 
+            const SizedBox(height: 30),
+
+            // ADD BUTTON
+            LuxuryButton(
+              text: 'Create New Goal',
+              icon: Icons.add_rounded,
+              onPressed: () {},
+            ),
+
             const SizedBox(height: 34),
 
-            // DAILY FOCUS
+            // DAILY
             const SectionTitle(
               title: 'Daily Focus',
             ),
