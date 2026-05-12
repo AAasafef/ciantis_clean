@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'app_items.dart';
 
-import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/calendar/calendar_screen.dart';
-
+import '../screens/dashboard/dashboard_screen.dart';
+import '../screens/finances/finances_screen.dart';
 import '../screens/goals/goals_screen.dart';
 import '../screens/habits/habits_screen.dart';
 import '../screens/journal/journal_screen.dart';
 import '../screens/self_care/self_care_screen.dart';
-import '../screens/finances/finances_screen.dart';
+import '../screens/settings/settings_screen.dart';
 
 const List<AppItem> ciantisApps = [
 
@@ -50,6 +50,18 @@ const List<AppItem> ciantisApps = [
   ),
 
   AppItem(
+    title: 'Calendar',
+    icon: Icons.calendar_month_outlined,
+    screen: CalendarScreen(),
+  ),
+
+  AppItem(
+    title: 'Settings',
+    icon: Icons.settings_outlined,
+    screen: SettingsScreen(),
+  ),
+
+  AppItem(
     title: 'Education',
     icon: Icons.school_outlined,
   ),
@@ -62,12 +74,6 @@ const List<AppItem> ciantisApps = [
   AppItem(
     title: 'Projects',
     icon: Icons.folder_outlined,
-  ),
-
-  AppItem(
-    title: 'Calendar',
-    icon: Icons.calendar_month_outlined,
-    screen: CalendarScreen(),
   ),
 
   AppItem(
