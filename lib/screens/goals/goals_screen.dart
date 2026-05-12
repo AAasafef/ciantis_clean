@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/ciantis_theme.dart';
-
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_card.dart';
+import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
 import '../../widgets/section_title.dart';
 
@@ -23,29 +22,16 @@ class GoalsScreen extends StatelessWidget {
               CrossAxisAlignment.start,
           children: [
 
-            // TITLE
-            const Text(
-              'Goals',
-              style: TextStyle(
-                color: CiantisTheme.white,
-                fontSize: 38,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            const Text(
-              'Build the future you want.',
-              style: TextStyle(
-                color: CiantisTheme.whiteSoft,
-                fontSize: 16,
-              ),
+            // PAGE HEADER
+            const PageHeader(
+              title: 'Goals',
+              subtitle:
+                  'Build the future you want.',
             ),
 
             const SizedBox(height: 34),
 
-            // DAILY
+            // DAILY FOCUS
             const SectionTitle(
               title: 'Daily Focus',
             ),
