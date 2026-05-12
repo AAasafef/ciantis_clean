@@ -7,15 +7,25 @@ import '../../services/goals_service.dart';
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
+import '../../widgets/luxury_dialog.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
+import '../../widgets/luxury_text_field.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
 import '../../widgets/section_title.dart';
 
-class GoalsScreen extends StatelessWidget {
+class GoalsScreen extends StatefulWidget {
   const GoalsScreen({super.key});
+
+  @override
+  State<GoalsScreen> createState() =>
+      _GoalsScreenState();
+}
+
+class _GoalsScreenState
+    extends State<GoalsScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +63,12 @@ class GoalsScreen extends StatelessWidget {
               LuxuryButton(
                 text: 'Create New Goal',
                 icon: Icons.add_rounded,
-                onPressed: () {},
+
+                onPressed: () {
+                  _showAddGoalDialog(
+                    context,
+                  );
+                },
               ),
 
               const LuxurySectionSpacing(
@@ -91,6 +106,7 @@ class GoalsScreen extends StatelessWidget {
     );
   }
 
+  // GOAL CARD
   Widget _goalCard(
     GoalModel goal,
   ) {
@@ -108,6 +124,97 @@ class GoalsScreen extends StatelessWidget {
     );
   }
 
+  // ADD DIALOG
+  void _showAddGoalDialog(
+    BuildContext context,
+  ) {
+
+    final titleController =
+        TextEditingController();
+
+    final subtitleController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+
+      builder: (context) {
+        return LuxuryDialog(
+          title: 'Create Goal',
+
+          subtitle:
+              'Add a new dream, focus, or milestone.',
+
+          child: Column(
+            children: [
+
+              LuxuryTextField(
+                hintText:
+                    'Goal Title',
+                icon:
+                    Icons.flag_outlined,
+              ),
+
+              const SizedBox(
+                height: 16,
+              ),
+
+              LuxuryTextField(
+                hintText:
+                    'Description',
+                icon:
+                    Icons.edit_outlined,
+              ),
+
+              const SizedBox(
+                height: 24,
+              ),
+
+              LuxuryButton(
+                text: 'Save Goal',
+
+                icon:
+                    Icons.save_outlined,
+
+                onPressed: () {
+
+                  GoalsService.instance
+                      .addGoal(
+                    GoalModel(
+                      id: DateTime.now()
+                          .millisecondsSinceEpoch
+                          .toString(),
+
+                      title:
+                          titleController
+                              .text,
+
+                      subtitle:
+                          subtitleController
+                              .text,
+
+                      progress: .0,
+
+                      category:
+                          'Daily Focus',
+                    ),
+                  );
+
+                  Navigator.pop(
+                    context,
+                  );
+
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // ICONS
   IconData _goalIcon(
     String title,
   ) {
