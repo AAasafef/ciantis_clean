@@ -8,6 +8,7 @@ import 'data/bottom_nav_items.dart';
 
 import 'widgets/glass_container.dart';
 import 'widgets/app_icon_tile.dart';
+import 'widgets/side_menu_item_tile.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -52,10 +53,8 @@ class _DashboardScreenState
       body: Stack(
         children: [
 
-          // BACKGROUND
           _background(),
 
-          // OVERLAY
           _overlay(),
 
           SafeArea(
@@ -79,7 +78,6 @@ class _DashboardScreenState
             ),
           ),
 
-          // BOTTOM BAR
           _bottomTaskbar(),
         ],
       ),
@@ -120,7 +118,7 @@ class _DashboardScreenState
                 .spaceBetween,
         children: [
 
-          // SIDE MENU BUTTON
+          // SIDE MENU
           GestureDetector(
             onTap: () {
               scaffoldKey.currentState
@@ -149,7 +147,7 @@ class _DashboardScreenState
             ),
           ),
 
-          // GRID MENU BUTTON
+          // GRID MENU
           GestureDetector(
             onTap: () {
               setState(() {
@@ -319,7 +317,7 @@ class _DashboardScreenState
               height: 24,
             ),
 
-            // APP GRID
+            // APPS
             Expanded(
               child:
                   GridView.builder(
@@ -388,7 +386,7 @@ class _DashboardScreenState
               ...bottomNavItems.map(
                 (item) {
 
-                  // CENTER BUTTON
+                  // CENTER MENU BUTTON
                   if (item.title ==
                       'Calendar') {
                     return GestureDetector(
@@ -483,9 +481,12 @@ class _DashboardScreenState
                         sideMenuItems[
                             index];
 
-                    return _menuItem(
-                      item.icon,
-                      item.title,
+                    return SideMenuItemTile(
+                      icon:
+                          item.icon,
+                      title:
+                          item.title,
+                      onTap: () {},
                     );
                   },
                 ),
@@ -557,46 +558,6 @@ class _DashboardScreenState
           ],
         ),
       ],
-    );
-  }
-
-  // MENU ITEM
-  Widget _menuItem(
-    IconData icon,
-    String title,
-  ) {
-    return Padding(
-      padding:
-          const EdgeInsets.only(
-        bottom: 22,
-      ),
-      child: Row(
-        children: [
-
-          Icon(
-            icon,
-            color:
-                CiantisTheme.white,
-            size: 24,
-          ),
-
-          const SizedBox(
-            width: 16,
-          ),
-
-          Text(
-            title,
-            style: const TextStyle(
-              color:
-                  CiantisTheme
-                      .white,
-              fontSize: 17,
-              fontWeight:
-                  FontWeight.w300,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
