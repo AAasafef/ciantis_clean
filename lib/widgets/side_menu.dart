@@ -5,6 +5,7 @@ import '../theme/ciantis_theme.dart';
 import '../data/side_menu_items.dart';
 
 import 'glass_container.dart';
+import 'luxury_avatar.dart';
 import 'side_menu_item_tile.dart';
 
 class SideMenu extends StatelessWidget {
@@ -14,16 +15,20 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.transparent,
+
       child: GlassContainer(
         borderRadius:
             CiantisTheme.radiusDrawer,
+
         padding: const EdgeInsets.all(
           24,
         ),
+
         child: SafeArea(
           child: Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start,
+
             children: [
 
               _profileHeader(),
@@ -34,6 +39,7 @@ class SideMenu extends StatelessWidget {
                 child: ListView.builder(
                   itemCount:
                       sideMenuItems.length,
+
                   itemBuilder:
                       (context, index) {
 
@@ -55,27 +61,19 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  // PROFILE
+  // PROFILE HEADER
   Widget _profileHeader() {
     return Row(
       children: [
 
-        CircleAvatar(
-          radius: 34,
-          backgroundColor:
-              CiantisTheme.profileBrown,
-          child: const Icon(
-            Icons.person,
-            color: CiantisTheme.white,
-            size: 34,
-          ),
-        ),
+        const LuxuryAvatar(),
 
         const SizedBox(width: 16),
 
         const Column(
           crossAxisAlignment:
               CrossAxisAlignment.start,
+
           children: [
 
             Text(
