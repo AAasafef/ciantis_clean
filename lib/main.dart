@@ -1,10 +1,12 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'theme/ciantis_theme.dart';
+
 import 'data/app_items.dart';
 import 'data/side_menu_items.dart';
 import 'data/bottom_nav_items.dart';
+
+import 'widgets/glass_container.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -28,11 +30,14 @@ class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<DashboardScreen> createState() =>
+      _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class _DashboardScreenState
+    extends State<DashboardScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
   bool showGridMenu = false;
 
@@ -50,18 +55,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 _topBar(),
                 const Spacer(),
-                if (!showGridMenu) _homePanel(),
-                if (showGridMenu) _gridMenu(),
+
+                if (!showGridMenu)
+                  _homePanel(),
+
+                if (showGridMenu)
+                  _gridMenu(),
+
                 const SizedBox(height: 110),
               ],
             ),
           ),
+
           _bottomTaskbar(),
         ],
       ),
     );
   }
 
+  // BACKGROUND
   Widget _background() {
     return Container(
       decoration: const BoxDecoration(
@@ -70,6 +82,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // OVERLAY
   Widget _overlay() {
     return Container(
       color: Colors.black.withOpacity(
@@ -78,6 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // TOP BAR
   Widget _topBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -88,9 +102,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         mainAxisAlignment:
             MainAxisAlignment.spaceBetween,
         children: [
+
+          // SIDE MENU
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState?.openDrawer();
+              scaffoldKey.currentState
+                  ?.openDrawer();
             },
             child: const Icon(
               Icons.menu_rounded,
@@ -98,6 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               size: 28,
             ),
           ),
+
           const Text(
             'the life',
             style: TextStyle(
@@ -108,10 +126,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               letterSpacing: 1,
             ),
           ),
+
+          // GRID MENU
           GestureDetector(
             onTap: () {
               setState(() {
-                showGridMenu = !showGridMenu;
+                showGridMenu =
+                    !showGridMenu;
               });
             },
             child: Icon(
@@ -127,90 +148,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // HOME PANEL
   Widget _homePanel() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24,
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(
-          CiantisTheme.radiusXLarge,
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: CiantisTheme.blurLight,
-            sigmaY: CiantisTheme.blurLight,
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(
-                CiantisTheme.glassOpacity,
-              ),
-              borderRadius: BorderRadius.circular(
-                CiantisTheme.radiusXLarge,
-              ),
-              border: Border.all(
-                color: Colors.white.withOpacity(
-                  CiantisTheme.glassBorderOpacity,
-                ),
+      child: const GlassContainer(
+        child: Column(
+          mainAxisSize:
+              MainAxisSize.min,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
+          children: [
+
+            Text(
+              'Welcome back',
+              style: TextStyle(
+                color:
+                    CiantisTheme.whiteSoft,
+                fontSize: 14,
               ),
             ),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome back',
-                  style: TextStyle(
-                    color:
-                        CiantisTheme.whiteSoft,
-                    fontSize: 14,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Your luxury life OS',
-                  style: TextStyle(
-                    color:
-                        CiantisTheme.white,
-                    fontSize:
-                        CiantisTheme.titleSize,
-                    fontWeight:
-                        FontWeight.w300,
-                  ),
-                ),
-                SizedBox(height: 12),
-                Text(
-                  'Everything organized beautifully.',
-                  style: TextStyle(
-                    color:
-                        CiantisTheme.whiteSoft,
-                    fontSize:
-                        CiantisTheme.bodySize,
-                  ),
-                ),
-              ],
+
+            SizedBox(height: 8),
+
+            Text(
+              'Your luxury life OS',
+              style: TextStyle(
+                color:
+                    CiantisTheme.white,
+                fontSize:
+                    CiantisTheme.titleSize,
+                fontWeight:
+                    FontWeight.w300,
+              ),
             ),
-          ),
+
+            SizedBox(height: 12),
+
+            Text(
+              'Everything organized beautifully.',
+              style: TextStyle(
+                color:
+                    CiantisTheme.whiteSoft,
+                fontSize:
+                    CiantisTheme.bodySize,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
+  // GRID MENU
   Widget _gridMenu() {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.only(top: 10),
-        padding: const EdgeInsets.symmetric(
+        margin: const EdgeInsets.only(
+          top: 10,
+        ),
+        padding:
+            const EdgeInsets.symmetric(
           horizontal:
               CiantisTheme.pagePadding,
           vertical: 18,
         ),
         decoration: const BoxDecoration(
-          color: CiantisTheme.creamPanel,
-          borderRadius: BorderRadius.only(
+          color:
+              CiantisTheme.creamPanel,
+          borderRadius:
+              BorderRadius.only(
             topLeft: Radius.circular(
               CiantisTheme.radiusSheet,
             ),
@@ -221,16 +230,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         child: Column(
           children: [
+
+            // DRAG BAR
             Container(
               height: 5,
               width: 50,
               decoration: BoxDecoration(
                 color: Colors.brown,
                 borderRadius:
-                    BorderRadius.circular(20),
+                    BorderRadius.circular(
+                  20,
+                ),
               ),
             ),
+
             const SizedBox(height: 24),
+
+            // SEARCH
             TextField(
               decoration: InputDecoration(
                 filled: true,
@@ -239,19 +255,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 hintText:
                     'Search anything...',
                 prefixIcon:
-                    const Icon(Icons.search),
-                border: OutlineInputBorder(
+                    const Icon(
+                  Icons.search,
+                ),
+                border:
+                    OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(18),
+                      BorderRadius.circular(
+                    18,
+                  ),
                   borderSide:
                       BorderSide.none,
                 ),
               ),
             ),
+
             const SizedBox(height: 24),
+
+            // APP GRID
             Expanded(
               child: GridView.builder(
-                itemCount: ciantisApps.length,
+                itemCount:
+                    ciantisApps.length,
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
@@ -267,12 +292,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                   return Column(
                     children: [
+
                       Container(
                         height: 68,
                         width: 68,
-                        decoration: BoxDecoration(
+                        decoration:
+                            BoxDecoration(
                           color:
-                              CiantisTheme.white,
+                              CiantisTheme
+                                  .white,
                           borderRadius:
                               BorderRadius.circular(
                             CiantisTheme
@@ -287,10 +315,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           size: 28,
                         ),
                       ),
-                      const SizedBox(height: 8),
+
+                      const SizedBox(
+                        height: 8,
+                      ),
+
                       Text(
                         app.title,
-                        style: const TextStyle(
+                        style:
+                            const TextStyle(
                           fontSize:
                               CiantisTheme
                                   .smallSize,
@@ -310,194 +343,175 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // BOTTOM BAR
   Widget _bottomTaskbar() {
     return Positioned(
       left: 24,
       right: 24,
-      bottom:
-          CiantisTheme.bottomBarBottomPadding,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(
-          CiantisTheme.radiusLarge,
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX:
-                CiantisTheme.blurLight,
-            sigmaY:
-                CiantisTheme.blurLight,
-          ),
-          child: Container(
-            height:
-                CiantisTheme.bottomBarHeight,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(
-                CiantisTheme.glassOpacity,
-              ),
-              borderRadius:
-                  BorderRadius.circular(
-                CiantisTheme.radiusLarge,
-              ),
-              border: Border.all(
-                color: Colors.white
-                    .withOpacity(
-                  CiantisTheme
-                      .glassBorderOpacity,
-                ),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly,
-              children: [
-                ...bottomNavItems.map(
-                  (item) {
-                    // CENTER BUTTON
-                    if (item.title ==
-                        'Calendar') {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            showGridMenu =
-                                !showGridMenu;
-                          });
-                        },
-                        child: Container(
-                          height: 56,
-                          width: 56,
-                          decoration:
-                              BoxDecoration(
-                            color:
-                                CiantisTheme
-                                    .white,
-                            borderRadius:
-                                BorderRadius.circular(
-                              20,
-                            ),
-                          ),
-                          child: Icon(
-                            showGridMenu
-                                ? Icons
-                                    .close_rounded
-                                : Icons
-                                    .apps_rounded,
-                            color:
-                                CiantisTheme
-                                    .deepBrown,
+      bottom: CiantisTheme
+          .bottomBarBottomPadding,
+      child: GlassContainer(
+        borderRadius:
+            CiantisTheme.radiusLarge,
+        padding: EdgeInsets.zero,
+        child: SizedBox(
+          height:
+              CiantisTheme.bottomBarHeight,
+          child: Row(
+            mainAxisAlignment:
+                MainAxisAlignment
+                    .spaceEvenly,
+            children: [
+
+              ...bottomNavItems.map(
+                (item) {
+
+                  // CENTER BUTTON
+                  if (item.title ==
+                      'Calendar') {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showGridMenu =
+                              !showGridMenu;
+                        });
+                      },
+                      child: Container(
+                        height: 56,
+                        width: 56,
+                        decoration:
+                            BoxDecoration(
+                          color:
+                              CiantisTheme
+                                  .white,
+                          borderRadius:
+                              BorderRadius.circular(
+                            20,
                           ),
                         ),
-                      );
-                    }
+                        child: Icon(
+                          showGridMenu
+                              ? Icons
+                                  .close_rounded
+                              : Icons
+                                  .apps_rounded,
+                          color:
+                              CiantisTheme
+                                  .deepBrown,
+                        ),
+                      ),
+                    );
+                  }
 
-                    return Icon(
+                  return Icon(
+                    item.icon,
+                    color:
+                        CiantisTheme
+                            .white,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // SIDE MENU
+  Widget _sideMenu() {
+    return Drawer(
+      backgroundColor:
+          Colors.transparent,
+      child: GlassContainer(
+        borderRadius:
+            CiantisTheme.radiusDrawer,
+        padding:
+            const EdgeInsets.all(24),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment
+                    .start,
+            children: [
+
+              _sideProfileHeader(),
+
+              const SizedBox(
+                height: 40,
+              ),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount:
+                      sideMenuItems.length,
+                  itemBuilder:
+                      (context, index) {
+
+                    final item =
+                        sideMenuItems[
+                            index];
+
+                    return _menuItem(
                       item.icon,
-                      color:
-                          CiantisTheme.white,
+                      item.title,
                     );
                   },
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _sideMenu() {
-    return Drawer(
-      backgroundColor: Colors.transparent,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(
-            CiantisTheme.radiusDrawer,
-          ),
-          bottomRight: Radius.circular(
-            CiantisTheme.radiusDrawer,
-          ),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX:
-                CiantisTheme.blurHeavy,
-            sigmaY:
-                CiantisTheme.blurHeavy,
-          ),
-          child: Container(
-            color:
-                Colors.brown.withOpacity(.35),
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    _sideProfileHeader(),
-                    const SizedBox(height: 40),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount:
-                            sideMenuItems.length,
-                        itemBuilder:
-                            (context, index) {
-
-                          final item =
-                              sideMenuItems[
-                                  index];
-
-                          return _menuItem(
-                            item.icon,
-                            item.title,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
 
+  // PROFILE HEADER
   Widget _sideProfileHeader() {
     return Row(
       children: [
+
         CircleAvatar(
           radius: 34,
           backgroundColor:
-              CiantisTheme.profileBrown,
+              CiantisTheme
+                  .profileBrown,
           child: const Icon(
             Icons.person,
-            color: CiantisTheme.white,
+            color:
+                CiantisTheme.white,
             size: 34,
           ),
         ),
+
         const SizedBox(width: 16),
+
         const Column(
           crossAxisAlignment:
-              CrossAxisAlignment.start,
+              CrossAxisAlignment
+                  .start,
           children: [
+
             Text(
               'the life',
               style: TextStyle(
-                color: CiantisTheme.white,
+                color:
+                    CiantisTheme.white,
                 fontSize:
-                    CiantisTheme.titleSize,
+                    CiantisTheme
+                        .titleSize,
                 fontWeight:
                     FontWeight.w300,
               ),
             ),
+
             SizedBox(height: 4),
+
             Text(
               'I\'M BUILDING',
               style: TextStyle(
-                color:
-                    CiantisTheme.whiteSoft,
+                color: CiantisTheme
+                    .whiteSoft,
                 letterSpacing: 2,
                 fontSize: 12,
               ),
@@ -508,25 +522,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // MENU ITEM
   Widget _menuItem(
     IconData icon,
     String title,
   ) {
     return Padding(
       padding:
-          const EdgeInsets.only(bottom: 22),
+          const EdgeInsets.only(
+        bottom: 22,
+      ),
       child: Row(
         children: [
+
           Icon(
             icon,
-            color: CiantisTheme.white,
+            color:
+                CiantisTheme.white,
             size: 24,
           ),
+
           const SizedBox(width: 16),
+
           Text(
             title,
             style: const TextStyle(
-              color: CiantisTheme.white,
+              color:
+                  CiantisTheme.white,
               fontSize: 17,
               fontWeight:
                   FontWeight.w300,
