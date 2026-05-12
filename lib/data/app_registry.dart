@@ -5,7 +5,14 @@ import 'app_items.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/calendar/calendar_screen.dart';
 
+import '../screens/goals/goals_screen.dart';
+import '../screens/habits/habits_screen.dart';
+import '../screens/journal/journal_screen.dart';
+import '../screens/self_care/self_care_screen.dart';
+import '../screens/finances/finances_screen.dart';
+
 const List<AppItem> ciantisApps = [
+
   AppItem(
     title: 'Home',
     icon: Icons.home_outlined,
@@ -15,26 +22,31 @@ const List<AppItem> ciantisApps = [
   AppItem(
     title: 'Goals',
     icon: Icons.favorite_border,
+    screen: GoalsScreen(),
   ),
 
   AppItem(
     title: 'Habits',
     icon: Icons.check_circle_outline,
+    screen: HabitsScreen(),
   ),
 
   AppItem(
     title: 'Journal',
     icon: Icons.menu_book_outlined,
+    screen: JournalScreen(),
   ),
 
   AppItem(
     title: 'Self Care',
     icon: Icons.spa_outlined,
+    screen: SelfCareScreen(),
   ),
 
   AppItem(
     title: 'Finances',
     icon: Icons.account_balance_wallet_outlined,
+    screen: FinancesScreen(),
   ),
 
   AppItem(
