@@ -13,6 +13,7 @@ import '../../widgets/luxury_dialog.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
+import '../../widgets/luxury_slider.dart';
 import '../../widgets/luxury_text_field.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
@@ -327,6 +328,9 @@ class _GoalsScreenState
     String selectedCategory =
         goal.category;
 
+    double progress =
+        goal.progress;
+
     showDialog(
       context: context,
 
@@ -418,6 +422,31 @@ class _GoalsScreenState
                     height: 24,
                   ),
 
+                  Text(
+                    'Progress ${(progress * 100).toInt()}%',
+                    style:
+                        const TextStyle(
+                      color:
+                          Colors.white,
+                    ),
+                  ),
+
+                  LuxurySlider(
+                    value: progress,
+
+                    onChanged: (
+                      value,
+                    ) {
+                      setDialogState(() {
+                        progress = value;
+                      });
+                    },
+                  ),
+
+                  const SizedBox(
+                    height: 24,
+                  ),
+
                   LuxuryButton(
                     text:
                         'Update Goal',
@@ -440,6 +469,9 @@ class _GoalsScreenState
 
                           category:
                               selectedCategory,
+
+                          progress:
+                              progress,
                         ),
                       );
 
