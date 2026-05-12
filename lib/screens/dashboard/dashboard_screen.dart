@@ -6,6 +6,7 @@ import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/grid_menu.dart';
 import '../../widgets/home_panel.dart';
 import '../../widgets/horizontal_card_scroll.dart';
+import '../../widgets/luxury_banner_card.dart';
 import '../../widgets/luxury_chip.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
@@ -86,6 +87,22 @@ class _DashboardScreenState
 
                                 // HOME
                                 const HomePanel(),
+
+                                const LuxurySectionSpacing(),
+
+                                // BANNER
+                                LuxuryBannerCard(
+                                  title:
+                                      'Good Evening',
+                                  subtitle:
+                                      'You completed 82% of your goals today. Keep building your dream life one step at a time.',
+                                  buttonText:
+                                      'View Goals',
+                                  icon:
+                                      Icons.auto_awesome_outlined,
+                                  onPressed:
+                                      () {},
+                                ),
 
                                 const LuxurySectionSpacing(),
 
