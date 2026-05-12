@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../models/goal_model.dart';
+
+import '../../services/goals_service.dart';
+
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
@@ -15,6 +19,19 @@ class GoalsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final dailyGoals =
+        GoalsService.instance
+            .getGoalsByCategory(
+      'Daily Focus',
+    );
+
+    final longTermGoals =
+        GoalsService.instance
+            .getGoalsByCategory(
+      'Long-Term Vision',
+    );
+
     return CiantisScreenShell(
       child: LuxuryPagePadding(
         child: LuxuryScrollView(
@@ -48,73 +65,22 @@ class GoalsScreen extends StatelessWidget {
                 title: 'Daily Focus',
               ),
 
-              const LuxuryCard(
-                icon: Icons.spa_outlined,
-                title: 'Self Care Routine',
-                subtitle:
-                    'Complete morning skincare and hydration goals.',
-                trailing: ProgressRing(
-                  text: '82%',
-                ),
-              ),
-
-              const LuxuryCard(
-                icon: Icons.menu_book_outlined,
-                title: 'Read 20 Pages',
-                subtitle:
-                    'Continue personal growth reading habit.',
-                trailing: ProgressRing(
-                  text: '65%',
-                ),
-              ),
-
-              const LuxuryCard(
-                icon:
-                    Icons.fitness_center_outlined,
-                title: 'Workout',
-                subtitle:
-                    'Complete wellness and movement routine.',
-                trailing: ProgressRing(
-                  text: '40%',
-                ),
+              ...dailyGoals.map(
+                (goal) =>
+                    _goalCard(goal),
               ),
 
               const LuxurySectionSpacing(),
 
               // LONG TERM
               const SectionTitle(
-                title: 'Long-Term Vision',
+                title:
+                    'Long-Term Vision',
               ),
 
-              const LuxuryCard(
-                icon:
-                    Icons.account_balance_wallet_outlined,
-                title: 'Financial Freedom',
-                subtitle:
-                    'Debt reduction + savings milestones.',
-                trailing: ProgressRing(
-                  text: '21%',
-                ),
-              ),
-
-              const LuxuryCard(
-                icon: Icons.school_outlined,
-                title: 'Nursing School',
-                subtitle:
-                    'Complete prerequisites and graduate.',
-                trailing: ProgressRing(
-                  text: '54%',
-                ),
-              ),
-
-              const LuxuryCard(
-                icon: Icons.home_outlined,
-                title: 'Dream Home',
-                subtitle:
-                    'Luxury wellness-centered living space.',
-                trailing: ProgressRing(
-                  text: '12%',
-                ),
+              ...longTermGoals.map(
+                (goal) =>
+                    _goalCard(goal),
               ),
 
               const LuxurySectionSpacing(),
@@ -123,5 +89,52 @@ class GoalsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _goalCard(
+    GoalModel goal,
+  ) {
+    return LuxuryCard(
+      icon: _goalIcon(goal.title),
+
+      title: goal.title,
+
+      subtitle: goal.subtitle,
+
+      trailing: ProgressRing(
+        text:
+            '${(goal.progress * 100).toInt()}%',
+      ),
+    );
+  }
+
+  IconData _goalIcon(
+    String title,
+  ) {
+    switch (title) {
+
+      case 'Self Care Routine':
+        return Icons.spa_outlined;
+
+      case 'Read 20 Pages':
+        return Icons.menu_book_outlined;
+
+      case 'Workout':
+        return Icons
+            .fitness_center_outlined;
+
+      case 'Financial Freedom':
+        return Icons
+            .account_balance_wallet_outlined;
+
+      case 'Nursing School':
+        return Icons.school_outlined;
+
+      case 'Dream Home':
+        return Icons.home_outlined;
+
+      default:
+        return Icons.flag_outlined;
+    }
   }
 }
