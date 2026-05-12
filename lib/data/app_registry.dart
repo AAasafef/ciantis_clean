@@ -8,6 +8,7 @@ import '../screens/finances/finances_screen.dart';
 import '../screens/goals/goals_screen.dart';
 import '../screens/habits/habits_screen.dart';
 import '../screens/journal/journal_screen.dart';
+import '../screens/profile/profile_screen.dart';
 import '../screens/self_care/self_care_screen.dart';
 import '../screens/settings/settings_screen.dart';
 
@@ -59,6 +60,12 @@ const List<AppItem> ciantisApps = [
     title: 'Settings',
     icon: Icons.settings_outlined,
     screen: SettingsScreen(),
+  ),
+
+  AppItem(
+    title: 'Profile',
+    icon: Icons.person_outline,
+    screen: ProfileScreen(),
   ),
 
   AppItem(
