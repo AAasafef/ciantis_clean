@@ -36,22 +36,45 @@ class SideMenu extends StatelessWidget {
               const SizedBox(height: 40),
 
               Expanded(
-                child: ListView.builder(
-                  itemCount:
-                      sideMenuItems.length,
+                child: ListView(
+                  children: [
 
-                  itemBuilder:
-                      (context, index) {
-
-                    final item =
-                        sideMenuItems[index];
-
-                    return SideMenuItemTile(
-                      icon: item.icon,
-                      title: item.title,
+                    SideMenuItemTile(
+                      icon: Icons.home_outlined,
+                      title: 'Dashboard',
+                      badgeCount: '2',
                       onTap: () {},
-                    );
-                  },
+                    ),
+
+                    SideMenuItemTile(
+                      icon:
+                          Icons.notifications_none,
+                      title: 'Notifications',
+                      badgeCount: '5',
+                      onTap: () {},
+                    ),
+
+                    SideMenuItemTile(
+                      icon:
+                          Icons.favorite_border,
+                      title: 'Goals',
+                      onTap: () {},
+                    ),
+
+                    SideMenuItemTile(
+                      icon:
+                          Icons.settings_outlined,
+                      title: 'Settings',
+                      onTap: () {},
+                    ),
+
+                    SideMenuItemTile(
+                      icon:
+                          Icons.person_outline,
+                      title: 'Profile',
+                      onTap: () {},
+                    ),
+                  ],
                 ),
               ),
             ],
