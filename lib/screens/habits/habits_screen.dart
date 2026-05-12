@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../models/task_model.dart';
-
 import '../../services/tasks_service.dart';
 
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/empty_state_card.dart';
+import '../../widgets/filter_chip_widget.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_dialog.dart';
 import '../../widgets/luxury_page_padding.dart';
@@ -34,6 +34,8 @@ class _HabitsScreenState
 
   String searchQuery = '';
 
+  String selectedFilter = 'All';
+
   @override
   void dispose() {
     searchController.dispose();
@@ -57,6 +59,22 @@ class _HabitsScreenState
                             .toLowerCase(),
                       ),
             )
+
+            .where((task) {
+
+              if (selectedFilter ==
+                  'Completed') {
+                return task.completed;
+              }
+
+              if (selectedFilter ==
+                  'Pending') {
+                return !task.completed;
+              }
+
+              return true;
+            })
+
             .toList();
 
     return CiantisScreenShell(
@@ -91,6 +109,61 @@ class _HabitsScreenState
 
               const LuxurySectionSpacing(),
 
+              // FILTERS
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+
+                  FilterChipWidget(
+                    text: 'All',
+
+                    selected:
+                        selectedFilter ==
+                            'All',
+
+                    onTap: () {
+                      setState(() {
+                        selectedFilter =
+                            'All';
+                      });
+                    },
+                  ),
+
+                  FilterChipWidget(
+                    text: 'Completed',
+
+                    selected:
+                        selectedFilter ==
+                            'Completed',
+
+                    onTap: () {
+                      setState(() {
+                        selectedFilter =
+                            'Completed';
+                      });
+                    },
+                  ),
+
+                  FilterChipWidget(
+                    text: 'Pending',
+
+                    selected:
+                        selectedFilter ==
+                            'Pending',
+
+                    onTap: () {
+                      setState(() {
+                        selectedFilter =
+                            'Pending';
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+              const LuxurySectionSpacing(),
+
               // BUTTON
               LuxuryButton(
                 text: 'Add Habit',
@@ -120,7 +193,7 @@ class _HabitsScreenState
                   title: 'No Habits Found',
 
                   subtitle:
-                      'Try adding a habit or changing your search.',
+                      'Try adding a habit or changing your filters.',
                 )
 
               else
