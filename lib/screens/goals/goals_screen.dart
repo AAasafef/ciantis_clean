@@ -4,6 +4,7 @@ import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
 import '../../widgets/luxury_page_padding.dart';
+import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
@@ -16,7 +17,7 @@ class GoalsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CiantisScreenShell(
       child: LuxuryPagePadding(
-        child: SingleChildScrollView(
+        child: LuxuryScrollView(
           child: Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start,
