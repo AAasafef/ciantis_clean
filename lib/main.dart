@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'theme/ciantis_theme.dart';
 
-import 'data/side_menu_items.dart';
-
 import 'widgets/bottom_nav_bar.dart';
-import 'widgets/glass_container.dart';
 import 'widgets/grid_menu.dart';
 import 'widgets/home_panel.dart';
-import 'widgets/side_menu_item_tile.dart';
+import 'widgets/side_menu.dart';
 import 'widgets/top_bar.dart';
 
 void main() {
@@ -51,7 +48,8 @@ class _DashboardScreenState
     return Scaffold(
       key: scaffoldKey,
 
-      drawer: _sideMenu(),
+      // SIDE MENU
+      drawer: const SideMenu(),
 
       body: Stack(
         children: [
@@ -70,11 +68,13 @@ class _DashboardScreenState
                 TopBar(
                   showGridMenu:
                       showGridMenu,
+
                   onMenuPressed: () {
                     scaffoldKey
                         .currentState
                         ?.openDrawer();
                   },
+
                   onGridPressed: () {
                     setState(() {
                       showGridMenu =
@@ -100,10 +100,11 @@ class _DashboardScreenState
             ),
           ),
 
-          // BOTTOM BAR
+          // BOTTOM NAV BAR
           BottomNavBar(
             showGridMenu:
                 showGridMenu,
+
             onMenuPressed: () {
               setState(() {
                 showGridMenu =
@@ -132,128 +133,6 @@ class _DashboardScreenState
       color: Colors.black.withOpacity(
         CiantisTheme.overlayOpacity,
       ),
-    );
-  }
-
-  // SIDE MENU
-  Widget _sideMenu() {
-    return Drawer(
-      backgroundColor:
-          Colors.transparent,
-      child: GlassContainer(
-        borderRadius:
-            CiantisTheme
-                .radiusDrawer,
-        padding:
-            const EdgeInsets.all(
-          24,
-        ),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment
-                    .start,
-            children: [
-
-              _sideProfileHeader(),
-
-              const SizedBox(
-                height: 40,
-              ),
-
-              Expanded(
-                child:
-                    ListView.builder(
-                  itemCount:
-                      sideMenuItems
-                          .length,
-                  itemBuilder:
-                      (
-                    context,
-                    index,
-                  ) {
-
-                    final item =
-                        sideMenuItems[
-                            index];
-
-                    return SideMenuItemTile(
-                      icon:
-                          item.icon,
-                      title:
-                          item.title,
-                      onTap: () {},
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // PROFILE
-  Widget _sideProfileHeader() {
-    return Row(
-      children: [
-
-        CircleAvatar(
-          radius: 34,
-          backgroundColor:
-              CiantisTheme
-                  .profileBrown,
-          child: const Icon(
-            Icons.person,
-            color:
-                CiantisTheme
-                    .white,
-            size: 34,
-          ),
-        ),
-
-        const SizedBox(
-          width: 16,
-        ),
-
-        const Column(
-          crossAxisAlignment:
-              CrossAxisAlignment
-                  .start,
-          children: [
-
-            Text(
-              'the life',
-              style: TextStyle(
-                color:
-                    CiantisTheme
-                        .white,
-                fontSize:
-                    CiantisTheme
-                        .titleSize,
-                fontWeight:
-                    FontWeight.w300,
-              ),
-            ),
-
-            SizedBox(
-              height: 4,
-            ),
-
-            Text(
-              'I\'M BUILDING',
-              style: TextStyle(
-                color:
-                    CiantisTheme
-                        .whiteSoft,
-                letterSpacing: 2,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
