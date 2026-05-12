@@ -151,8 +151,12 @@ class _GoalsScreenState
               LuxuryTextField(
                 hintText:
                     'Goal Title',
+
                 icon:
                     Icons.flag_outlined,
+
+                controller:
+                    titleController,
               ),
 
               const SizedBox(
@@ -162,8 +166,12 @@ class _GoalsScreenState
               LuxuryTextField(
                 hintText:
                     'Description',
+
                 icon:
                     Icons.edit_outlined,
+
+                controller:
+                    subtitleController,
               ),
 
               const SizedBox(
