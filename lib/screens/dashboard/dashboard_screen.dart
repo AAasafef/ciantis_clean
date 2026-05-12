@@ -6,6 +6,7 @@ import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/grid_menu.dart';
 import '../../widgets/home_panel.dart';
 import '../../widgets/horizontal_card_scroll.dart';
+import '../../widgets/luxury_chip.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
 import '../../widgets/luxury_section_spacing.dart';
@@ -85,6 +86,44 @@ class _DashboardScreenState
 
                                 // HOME PANEL
                                 const HomePanel(),
+
+                                const LuxurySectionSpacing(),
+
+                                // CHIPS
+                                Wrap(
+                                  spacing: 12,
+                                  runSpacing: 12,
+                                  children: const [
+
+                                    LuxuryChip(
+                                      text:
+                                          'Focused',
+                                      icon:
+                                          Icons.psychology_outlined,
+                                    ),
+
+                                    LuxuryChip(
+                                      text:
+                                          'Hydrated',
+                                      icon:
+                                          Icons.water_drop_outlined,
+                                    ),
+
+                                    LuxuryChip(
+                                      text:
+                                          'Productive',
+                                      icon:
+                                          Icons.bolt_outlined,
+                                    ),
+
+                                    LuxuryChip(
+                                      text:
+                                          'Calm',
+                                      icon:
+                                          Icons.spa_outlined,
+                                    ),
+                                  ],
+                                ),
 
                                 const LuxurySectionSpacing(),
 
