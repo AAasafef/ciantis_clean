@@ -5,6 +5,10 @@ import '../../theme/ciantis_theme.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/grid_menu.dart';
 import '../../widgets/home_panel.dart';
+import '../../widgets/luxury_page_padding.dart';
+import '../../widgets/luxury_scroll_view.dart';
+import '../../widgets/luxury_section_spacing.dart';
+import '../../widgets/quote_card.dart';
 import '../../widgets/side_menu.dart';
 import '../../widgets/top_bar.dart';
 
@@ -30,7 +34,6 @@ class _DashboardScreenState
     return Scaffold(
       key: scaffoldKey,
 
-      // SIDE MENU
       drawer: const SideMenu(),
 
       body: Stack(
@@ -65,18 +68,49 @@ class _DashboardScreenState
                   },
                 ),
 
-                const Spacer(),
+                // CONTENT
+                Expanded(
+                  child: showGridMenu
+                      ? const GridMenu()
+                      : LuxuryPagePadding(
+                          child:
+                              LuxuryScrollView(
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment
+                                      .start,
+                              children: [
 
-                // HOME PANEL
-                if (!showGridMenu)
-                  const HomePanel(),
+                                // HOME PANEL
+                                const HomePanel(),
 
-                // GRID MENU
-                if (showGridMenu)
-                  const GridMenu(),
+                                const LuxurySectionSpacing(),
 
-                const SizedBox(
-                  height: 110,
+                                // QUOTE
+                                const QuoteCard(
+                                  quote:
+                                      'Your future is built by what you do repeatedly.',
+                                  author:
+                                      'Ciantis',
+                                ),
+
+                                const LuxurySectionSpacing(),
+
+                                // SECOND CARD
+                                const QuoteCard(
+                                  quote:
+                                      'Luxury is peace, organization, clarity, and control.',
+                                  author:
+                                      'The Life OS',
+                                ),
+
+                                const SizedBox(
+                                  height: 120,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                 ),
               ],
             ),
