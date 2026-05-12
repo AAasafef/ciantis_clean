@@ -15,6 +15,7 @@ import '../../widgets/luxury_text_field.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/search_bar_widget.dart';
 import '../../widgets/section_title.dart';
+import '../../widgets/stat_overview_card.dart';
 import '../../widgets/task_tile.dart';
 
 class HabitsScreen extends StatefulWidget {
@@ -46,9 +47,36 @@ class _HabitsScreenState
   @override
   Widget build(BuildContext context) {
 
-    final tasks =
+    final allTasks =
         TasksService.instance
-            .getTasks()
+            .getTasks();
+
+    final completedCount =
+        allTasks
+            .where(
+              (task) =>
+                  task.completed,
+            )
+            .length;
+
+    final pendingCount =
+        allTasks
+            .where(
+              (task) =>
+                  !task.completed,
+            )
+            .length;
+
+    final completionRate =
+        allTasks.isEmpty
+            ? 0
+            : ((completedCount /
+                        allTasks.length) *
+                    100)
+                .toInt();
+
+    final tasks =
+        allTasks
 
             .where(
               (task) =>
@@ -90,6 +118,53 @@ class _HabitsScreenState
                 title: 'Habits',
                 subtitle:
                     'Build consistency and daily discipline.',
+              ),
+
+              const LuxurySectionSpacing(),
+
+              // STATS
+              Row(
+                children: [
+
+                  StatOverviewCard(
+                    value:
+                        '$completedCount',
+
+                    label:
+                        'Completed',
+
+                    icon:
+                        Icons.check_circle,
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  StatOverviewCard(
+                    value:
+                        '$pendingCount',
+
+                    label:
+                        'Pending',
+
+                    icon:
+                        Icons
+                            .schedule_outlined,
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  StatOverviewCard(
+                    value:
+                        '$completionRate%',
+
+                    label:
+                        'Success',
+
+                    icon:
+                        Icons
+                            .trending_up_outlined,
+                  ),
+                ],
               ),
 
               const LuxurySectionSpacing(),
