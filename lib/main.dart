@@ -4,11 +4,11 @@ import 'theme/ciantis_theme.dart';
 
 import 'data/app_items.dart';
 import 'data/side_menu_items.dart';
-import 'data/bottom_nav_items.dart';
 
 import 'widgets/glass_container.dart';
 import 'widgets/app_icon_tile.dart';
 import 'widgets/side_menu_item_tile.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -53,8 +53,10 @@ class _DashboardScreenState
       body: Stack(
         children: [
 
+          // BACKGROUND
           _background(),
 
+          // OVERLAY
           _overlay(),
 
           SafeArea(
@@ -78,7 +80,17 @@ class _DashboardScreenState
             ),
           ),
 
-          _bottomTaskbar(),
+          // BOTTOM BAR
+          BottomNavBar(
+            showGridMenu:
+                showGridMenu,
+            onMenuPressed: () {
+              setState(() {
+                showGridMenu =
+                    !showGridMenu;
+              });
+            },
+          ),
         ],
       ),
     );
@@ -118,7 +130,7 @@ class _DashboardScreenState
                 .spaceBetween,
         children: [
 
-          // SIDE MENU
+          // SIDE MENU BUTTON
           GestureDetector(
             onTap: () {
               scaffoldKey.currentState
@@ -147,7 +159,7 @@ class _DashboardScreenState
             ),
           ),
 
-          // GRID MENU
+          // GRID MENU BUTTON
           GestureDetector(
             onTap: () {
               setState(() {
@@ -317,7 +329,7 @@ class _DashboardScreenState
               height: 24,
             ),
 
-            // APPS
+            // APP GRID
             Expanded(
               child:
                   GridView.builder(
@@ -356,84 +368,6 @@ class _DashboardScreenState
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  // BOTTOM BAR
-  Widget _bottomTaskbar() {
-    return Positioned(
-      left: 24,
-      right: 24,
-      bottom: CiantisTheme
-          .bottomBarBottomPadding,
-      child: GlassContainer(
-        borderRadius:
-            CiantisTheme
-                .radiusLarge,
-        padding:
-            EdgeInsets.zero,
-        child: SizedBox(
-          height: CiantisTheme
-              .bottomBarHeight,
-          child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment
-                    .spaceEvenly,
-            children: [
-
-              ...bottomNavItems.map(
-                (item) {
-
-                  // CENTER MENU BUTTON
-                  if (item.title ==
-                      'Calendar') {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showGridMenu =
-                              !showGridMenu;
-                        });
-                      },
-                      child:
-                          Container(
-                        height: 56,
-                        width: 56,
-                        decoration:
-                            BoxDecoration(
-                          color:
-                              CiantisTheme
-                                  .white,
-                          borderRadius:
-                              BorderRadius.circular(
-                            20,
-                          ),
-                        ),
-                        child: Icon(
-                          showGridMenu
-                              ? Icons
-                                  .close_rounded
-                              : Icons
-                                  .apps_rounded,
-                          color:
-                              CiantisTheme
-                                  .deepBrown,
-                        ),
-                      ),
-                    );
-                  }
-
-                  return Icon(
-                    item.icon,
-                    color:
-                        CiantisTheme
-                            .white,
-                  );
-                },
-              ),
-            ],
-          ),
         ),
       ),
     );
