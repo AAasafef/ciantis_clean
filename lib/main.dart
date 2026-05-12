@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'theme/ciantis_theme.dart';
 import 'data/app_items.dart';
+import 'data/side_menu_items.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -336,49 +337,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 34,
-                          backgroundColor: CiantisTheme.profileBrown,
-                          child: const Icon(
-                            Icons.person,
-                            color: CiantisTheme.white,
-                            size: 34,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'the life',
-                              style: TextStyle(
-                                color: CiantisTheme.white,
-                                fontSize: CiantisTheme.titleSize,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'I\'M BUILDING',
-                              style: TextStyle(
-                                color: CiantisTheme.whiteSoft,
-                                letterSpacing: 2,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    _sideProfileHeader(),
                     const SizedBox(height: 40),
-                    _menuItem(Icons.home_outlined, 'Home'),
-                    _menuItem(Icons.favorite_border, 'Goals'),
-                    _menuItem(Icons.check_circle_outline, 'Habits'),
-                    _menuItem(Icons.menu_book_outlined, 'Journal'),
-                    _menuItem(Icons.spa_outlined, 'Self Care'),
-                    _menuItem(Icons.settings_outlined, 'Settings'),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: sideMenuItems.length,
+                        itemBuilder: (context, index) {
+                          final item = sideMenuItems[index];
+
+                          return _menuItem(
+                            item.icon,
+                            item.title,
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -386,6 +359,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _sideProfileHeader() {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 34,
+          backgroundColor: CiantisTheme.profileBrown,
+          child: const Icon(
+            Icons.person,
+            color: CiantisTheme.white,
+            size: 34,
+          ),
+        ),
+        const SizedBox(width: 16),
+        const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'the life',
+              style: TextStyle(
+                color: CiantisTheme.white,
+                fontSize: CiantisTheme.titleSize,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              'I\'M BUILDING',
+              style: TextStyle(
+                color: CiantisTheme.whiteSoft,
+                letterSpacing: 2,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
