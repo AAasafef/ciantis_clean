@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../theme/ciantis_theme.dart';
+
 import 'glass_container.dart';
-import 'luxury_button.dart';
+import 'luxury_small_button.dart';
 
 class LuxuryBannerCard extends StatelessWidget {
   final String title;
+
   final String subtitle;
+
   final String buttonText;
+
   final VoidCallback onPressed;
+
   final IconData icon;
 
   const LuxuryBannerCard({
@@ -23,10 +28,13 @@ class LuxuryBannerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-      borderRadius: CiantisTheme.radiusLarge,
+      borderRadius:
+          CiantisTheme.radiusLarge,
+
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
 
           Icon(
@@ -51,7 +59,8 @@ class LuxuryBannerCard extends StatelessWidget {
           Text(
             subtitle,
             style: const TextStyle(
-              color: CiantisTheme.whiteSoft,
+              color:
+                  CiantisTheme.whiteSoft,
               fontSize: 14,
               height: 1.5,
             ),
@@ -59,8 +68,9 @@ class LuxuryBannerCard extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          LuxuryButton(
+          LuxurySmallButton(
             text: buttonText,
+            icon: Icons.arrow_forward_rounded,
             onPressed: onPressed,
           ),
         ],
