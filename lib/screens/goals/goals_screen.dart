@@ -1,99 +1,289 @@
-import '../models/goal_model.dart';
+import 'package:flutter/material.dart';
 
-class GoalsService {
-  static final GoalsService instance =
-      GoalsService._internal();
+import '../../models/goal_model.dart';
+import '../../services/goals_service.dart';
 
-  GoalsService._internal();
+import '../../widgets/ciantis_screen_shell.dart';
+import '../../widgets/delete_icon_button.dart';
+import '../../widgets/edit_icon_button.dart';
+import '../../widgets/luxury_button.dart';
+import '../../widgets/luxury_card.dart';
+import '../../widgets/luxury_dialog.dart';
+import '../../widgets/luxury_page_padding.dart';
+import '../../widgets/luxury_scroll_view.dart';
+import '../../widgets/luxury_section_spacing.dart';
+import '../../widgets/luxury_text_field.dart';
+import '../../widgets/page_header.dart';
+import '../../widgets/progress_ring.dart';
+import '../../widgets/section_title.dart';
 
-  final List<GoalModel> _goals = [
-    GoalModel(
-      id: '1',
-      title: 'Self Care Routine',
-      subtitle:
-          'Complete morning skincare and hydration goals.',
-      progress: .82,
-      category: 'Daily Focus',
-    ),
-    GoalModel(
-      id: '2',
-      title: 'Read 20 Pages',
-      subtitle:
-          'Continue personal growth reading habit.',
-      progress: .65,
-      category: 'Daily Focus',
-    ),
-    GoalModel(
-      id: '3',
-      title: 'Workout',
-      subtitle:
-          'Complete wellness and movement routine.',
-      progress: .40,
-      category: 'Daily Focus',
-    ),
-    GoalModel(
-      id: '4',
-      title: 'Financial Freedom',
-      subtitle:
-          'Debt reduction + savings milestones.',
-      progress: .21,
-      category: 'Long-Term Vision',
-    ),
-    GoalModel(
-      id: '5',
-      title: 'Nursing School',
-      subtitle:
-          'Complete prerequisites and graduate.',
-      progress: .54,
-      category: 'Long-Term Vision',
-    ),
-    GoalModel(
-      id: '6',
-      title: 'Dream Home',
-      subtitle:
-          'Luxury wellness-centered living space.',
-      progress: .12,
-      category: 'Long-Term Vision',
-    ),
-  ];
+class GoalsScreen extends StatefulWidget {
+  const GoalsScreen({super.key});
 
-  List<GoalModel> getGoals() {
-    return _goals;
+  @override
+  State<GoalsScreen> createState() =>
+      _GoalsScreenState();
+}
+
+class _GoalsScreenState
+    extends State<GoalsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final dailyGoals = GoalsService.instance
+        .getGoalsByCategory('Daily Focus');
+
+    final longTermGoals = GoalsService.instance
+        .getGoalsByCategory('Long-Term Vision');
+
+    return CiantisScreenShell(
+      child: LuxuryPagePadding(
+        child: LuxuryScrollView(
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              const PageHeader(
+                title: 'Goals',
+                subtitle:
+                    'Build the future you want.',
+              ),
+
+              const LuxurySectionSpacing(),
+
+              LuxuryButton(
+                text: 'Create New Goal',
+                icon: Icons.add_rounded,
+                onPressed: () {
+                  _showAddGoalDialog(context);
+                },
+              ),
+
+              const LuxurySectionSpacing(
+                height: 34,
+              ),
+
+              const SectionTitle(
+                title: 'Daily Focus',
+              ),
+
+              ...dailyGoals.map(
+                (goal) => _goalCard(goal),
+              ),
+
+              const LuxurySectionSpacing(),
+
+              const SectionTitle(
+                title: 'Long-Term Vision',
+              ),
+
+              ...longTermGoals.map(
+                (goal) => _goalCard(goal),
+              ),
+
+              const LuxurySectionSpacing(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
-  List<GoalModel> getGoalsByCategory(
-    String category,
-  ) {
-    return _goals
-        .where(
-          (goal) => goal.category == category,
-        )
-        .toList();
-  }
-
-  void addGoal(
+  Widget _goalCard(
     GoalModel goal,
   ) {
-    _goals.add(goal);
+    return LuxuryCard(
+      icon: _goalIcon(goal.title),
+      title: goal.title,
+      subtitle: goal.subtitle,
+      trailing: Column(
+        children: [
+          ProgressRing(
+            text:
+                '${(goal.progress * 100).toInt()}%',
+          ),
+
+          const SizedBox(height: 12),
+
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              EditIconButton(
+                onPressed: () {
+                  _showEditGoalDialog(
+                    context,
+                    goal,
+                  );
+                },
+              ),
+
+              const SizedBox(width: 10),
+
+              DeleteIconButton(
+                onPressed: () {
+                  GoalsService.instance
+                      .deleteGoal(goal.id);
+
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
-  void updateGoal(
-    GoalModel updatedGoal,
+  void _showAddGoalDialog(
+    BuildContext context,
   ) {
-    final index = _goals.indexWhere(
-      (goal) => goal.id == updatedGoal.id,
+    final titleController =
+        TextEditingController();
+
+    final subtitleController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return LuxuryDialog(
+          title: 'Create Goal',
+          subtitle:
+              'Add a new dream, focus, or milestone.',
+          child: Column(
+            children: [
+              LuxuryTextField(
+                hintText: 'Goal Title',
+                icon: Icons.flag_outlined,
+                controller: titleController,
+              ),
+
+              const SizedBox(height: 16),
+
+              LuxuryTextField(
+                hintText: 'Description',
+                icon: Icons.edit_outlined,
+                controller: subtitleController,
+              ),
+
+              const SizedBox(height: 24),
+
+              LuxuryButton(
+                text: 'Save Goal',
+                icon: Icons.save_outlined,
+                onPressed: () {
+                  GoalsService.instance.addGoal(
+                    GoalModel(
+                      id: DateTime.now()
+                          .millisecondsSinceEpoch
+                          .toString(),
+                      title: titleController.text,
+                      subtitle:
+                          subtitleController.text,
+                      progress: .0,
+                      category: 'Daily Focus',
+                    ),
+                  );
+
+                  Navigator.pop(context);
+
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showEditGoalDialog(
+    BuildContext context,
+    GoalModel goal,
+  ) {
+    final titleController =
+        TextEditingController(
+      text: goal.title,
     );
 
-    if (index != -1) {
-      _goals[index] = updatedGoal;
+    final subtitleController =
+        TextEditingController(
+      text: goal.subtitle,
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return LuxuryDialog(
+          title: 'Edit Goal',
+          subtitle:
+              'Update your focus or milestone.',
+          child: Column(
+            children: [
+              LuxuryTextField(
+                hintText: 'Goal Title',
+                icon: Icons.flag_outlined,
+                controller: titleController,
+              ),
+
+              const SizedBox(height: 16),
+
+              LuxuryTextField(
+                hintText: 'Description',
+                icon: Icons.edit_outlined,
+                controller: subtitleController,
+              ),
+
+              const SizedBox(height: 24),
+
+              LuxuryButton(
+                text: 'Update Goal',
+                icon: Icons.save_outlined,
+                onPressed: () {
+                  GoalsService.instance.updateGoal(
+                    goal.copyWith(
+                      title: titleController.text,
+                      subtitle:
+                          subtitleController.text,
+                    ),
+                  );
+
+                  Navigator.pop(context);
+
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  IconData _goalIcon(
+    String title,
+  ) {
+    switch (title) {
+      case 'Self Care Routine':
+        return Icons.spa_outlined;
+
+      case 'Read 20 Pages':
+        return Icons.menu_book_outlined;
+
+      case 'Workout':
+        return Icons.fitness_center_outlined;
+
+      case 'Financial Freedom':
+        return Icons
+            .account_balance_wallet_outlined;
+
+      case 'Nursing School':
+        return Icons.school_outlined;
+
+      case 'Dream Home':
+        return Icons.home_outlined;
+
+      default:
+        return Icons.flag_outlined;
     }
-  }
-
-  void deleteGoal(
-    String id,
-  ) {
-    _goals.removeWhere(
-      (goal) => goal.id == id,
-    );
   }
 }
