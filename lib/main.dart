@@ -9,6 +9,7 @@ import 'widgets/glass_container.dart';
 import 'widgets/app_icon_tile.dart';
 import 'widgets/side_menu_item_tile.dart';
 import 'widgets/bottom_nav_bar.dart';
+import 'widgets/top_bar.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -63,13 +64,30 @@ class _DashboardScreenState
             child: Column(
               children: [
 
-                _topBar(),
+                // TOP BAR
+                TopBar(
+                  showGridMenu:
+                      showGridMenu,
+                  onMenuPressed: () {
+                    scaffoldKey
+                        .currentState
+                        ?.openDrawer();
+                  },
+                  onGridPressed: () {
+                    setState(() {
+                      showGridMenu =
+                          !showGridMenu;
+                    });
+                  },
+                ),
 
                 const Spacer(),
 
+                // HOME PANEL
                 if (!showGridMenu)
                   _homePanel(),
 
+                // GRID MENU
                 if (showGridMenu)
                   _gridMenu(),
 
@@ -111,74 +129,6 @@ class _DashboardScreenState
     return Container(
       color: Colors.black.withOpacity(
         CiantisTheme.overlayOpacity,
-      ),
-    );
-  }
-
-  // TOP BAR
-  Widget _topBar() {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal:
-            CiantisTheme.pagePadding,
-        vertical: 10,
-      ),
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment
-                .spaceBetween,
-        children: [
-
-          // SIDE MENU BUTTON
-          GestureDetector(
-            onTap: () {
-              scaffoldKey.currentState
-                  ?.openDrawer();
-            },
-            child: const Icon(
-              Icons.menu_rounded,
-              color:
-                  CiantisTheme.white,
-              size: 28,
-            ),
-          ),
-
-          // TITLE
-          const Text(
-            'the life',
-            style: TextStyle(
-              color:
-                  CiantisTheme.white,
-              fontSize:
-                  CiantisTheme
-                      .appTitleSize,
-              fontWeight:
-                  FontWeight.w300,
-              letterSpacing: 1,
-            ),
-          ),
-
-          // GRID MENU BUTTON
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                showGridMenu =
-                    !showGridMenu;
-              });
-            },
-            child: Icon(
-              showGridMenu
-                  ? Icons
-                      .close_rounded
-                  : Icons
-                      .apps_rounded,
-              color:
-                  CiantisTheme.white,
-              size: 28,
-            ),
-          ),
-        ],
       ),
     );
   }
