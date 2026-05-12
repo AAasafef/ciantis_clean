@@ -5,6 +5,7 @@ import '../theme/ciantis_theme.dart';
 import '../data/app_registry.dart';
 
 import 'app_icon_tile.dart';
+import 'luxury_text_field.dart';
 
 class GridMenu extends StatelessWidget {
   const GridMenu({super.key});
@@ -33,12 +34,15 @@ class GridMenu extends StatelessWidget {
         ),
         child: Column(
           children: [
+
+            // DRAG BAR
             Container(
               height: 5,
               width: 50,
               decoration: BoxDecoration(
                 color: Colors.brown,
-                borderRadius: BorderRadius.circular(
+                borderRadius:
+                    BorderRadius.circular(
                   20,
                 ),
               ),
@@ -46,26 +50,20 @@ class GridMenu extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: CiantisTheme.white,
-                hintText: 'Search anything...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    18,
-                  ),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+            // SEARCH
+            const LuxuryTextField(
+              hintText:
+                  'Search anything...',
+              icon: Icons.search,
             ),
 
             const SizedBox(height: 24),
 
+            // APPS
             Expanded(
               child: GridView.builder(
                 itemCount: ciantisApps.length,
+
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
@@ -73,18 +71,27 @@ class GridMenu extends StatelessWidget {
                   mainAxisSpacing: 18,
                   childAspectRatio: .82,
                 ),
-                itemBuilder: (context, index) {
-                  final app = ciantisApps[index];
+
+                itemBuilder:
+                    (context, index) {
+
+                  final app =
+                      ciantisApps[index];
 
                   return AppIconTile(
                     title: app.title,
                     icon: app.icon,
+
                     onTap: () {
-                      if (app.screen != null) {
+                      if (app.screen !=
+                          null) {
                         Navigator.push(
                           context,
+
                           MaterialPageRoute(
-                            builder: (context) => app.screen!,
+                            builder:
+                                (context) =>
+                                    app.screen!,
                           ),
                         );
                       }
