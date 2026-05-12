@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_card.dart';
+import '../../widgets/luxury_section_spacing.dart';
 import '../../widgets/page_header.dart';
 import '../../widgets/progress_ring.dart';
 import '../../widgets/section_title.dart';
@@ -30,16 +31,18 @@ class GoalsScreen extends StatelessWidget {
                   'Build the future you want.',
             ),
 
-            const SizedBox(height: 30),
+            const LuxurySectionSpacing(),
 
-            // ADD BUTTON
+            // BUTTON
             LuxuryButton(
               text: 'Create New Goal',
               icon: Icons.add_rounded,
               onPressed: () {},
             ),
 
-            const SizedBox(height: 34),
+            const LuxurySectionSpacing(
+              height: 34,
+            ),
 
             // DAILY
             const SectionTitle(
@@ -77,7 +80,7 @@ class GoalsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 28),
+            const LuxurySectionSpacing(),
 
             // LONG TERM
             const SectionTitle(
@@ -115,7 +118,7 @@ class GoalsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const LuxurySectionSpacing(),
           ],
         ),
       ),
