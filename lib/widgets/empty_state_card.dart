@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../theme/ciantis_theme.dart';
-import 'glass_container.dart';
 
 class EmptyStateCard extends StatelessWidget {
   final IconData icon;
+
   final String title;
+
   final String subtitle;
 
   const EmptyStateCard({
@@ -17,24 +18,42 @@ class EmptyStateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassContainer(
+    return Container(
+      width: double.infinity,
+
+      padding: const EdgeInsets.all(
+        28,
+      ),
+
+      decoration: BoxDecoration(
+        color:
+            Colors.white.withOpacity(
+          .06,
+        ),
+
+        borderRadius:
+            BorderRadius.circular(
+          28,
+        ),
+      ),
+
       child: Column(
         children: [
 
           Icon(
             icon,
-            color: CiantisTheme.whiteSoft,
-            size: 54,
+            size: 52,
+            color:
+                CiantisTheme.whiteSoft,
           ),
 
           const SizedBox(height: 18),
 
           Text(
             title,
-            textAlign: TextAlign.center,
             style: const TextStyle(
               color: CiantisTheme.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.w300,
             ),
           ),
@@ -45,8 +64,10 @@ class EmptyStateCard extends StatelessWidget {
             subtitle,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: CiantisTheme.whiteSoft,
+              color:
+                  CiantisTheme.whiteSoft,
               fontSize: 14,
+              height: 1.5,
             ),
           ),
         ],
