@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../theme/ciantis_theme.dart';
+
 import '../data/bottom_nav_items.dart';
+
 import 'glass_container.dart';
 
 class BottomNavBar extends StatelessWidget {
   final bool showGridMenu;
+
   final VoidCallback onMenuPressed;
 
   const BottomNavBar({
@@ -21,10 +24,12 @@ class BottomNavBar extends StatelessWidget {
       right: 24,
       bottom: CiantisTheme.bottomBarBottomPadding,
       child: GlassContainer(
-        borderRadius: CiantisTheme.radiusLarge,
+        borderRadius:
+            CiantisTheme.radiusLarge,
         padding: EdgeInsets.zero,
         child: SizedBox(
-          height: CiantisTheme.bottomBarHeight,
+          height:
+              CiantisTheme.bottomBarHeight,
           child: Row(
             mainAxisAlignment:
                 MainAxisAlignment.spaceEvenly,
@@ -34,14 +39,17 @@ class BottomNavBar extends StatelessWidget {
                 (item) {
 
                   // CENTER MENU BUTTON
-                  if (item.title == 'Calendar') {
+                  if (item.title ==
+                      'Calendar') {
                     return GestureDetector(
                       onTap: onMenuPressed,
                       child: Container(
                         height: 56,
                         width: 56,
-                        decoration: BoxDecoration(
-                          color: CiantisTheme.white,
+                        decoration:
+                            BoxDecoration(
+                          color:
+                              CiantisTheme.white,
                           borderRadius:
                               BorderRadius.circular(
                             20,
@@ -58,9 +66,14 @@ class BottomNavBar extends StatelessWidget {
                     );
                   }
 
-                  return Icon(
-                    item.icon,
-                    color: CiantisTheme.white,
+                  return GestureDetector(
+                    onTap: () {},
+
+                    child: Icon(
+                      item.icon,
+                      color:
+                          CiantisTheme.white,
+                    ),
                   );
                 },
               ),
