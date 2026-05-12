@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/goal_model.dart';
 import '../../services/goals_service.dart';
 
+import '../../widgets/category_picker_chip.dart';
 import '../../widgets/ciantis_screen_shell.dart';
 import '../../widgets/delete_icon_button.dart';
 import '../../widgets/edit_icon_button.dart';
@@ -27,13 +28,21 @@ class GoalsScreen extends StatefulWidget {
 
 class _GoalsScreenState
     extends State<GoalsScreen> {
+
   @override
   Widget build(BuildContext context) {
-    final dailyGoals = GoalsService.instance
-        .getGoalsByCategory('Daily Focus');
 
-    final longTermGoals = GoalsService.instance
-        .getGoalsByCategory('Long-Term Vision');
+    final dailyGoals =
+        GoalsService.instance
+            .getGoalsByCategory(
+      'Daily Focus',
+    );
+
+    final longTermGoals =
+        GoalsService.instance
+            .getGoalsByCategory(
+      'Long-Term Vision',
+    );
 
     return CiantisScreenShell(
       child: LuxuryPagePadding(
@@ -42,6 +51,7 @@ class _GoalsScreenState
             crossAxisAlignment:
                 CrossAxisAlignment.start,
             children: [
+
               const PageHeader(
                 title: 'Goals',
                 subtitle:
@@ -54,7 +64,9 @@ class _GoalsScreenState
                 text: 'Create New Goal',
                 icon: Icons.add_rounded,
                 onPressed: () {
-                  _showAddGoalDialog(context);
+                  _showAddGoalDialog(
+                    context,
+                  );
                 },
               ),
 
@@ -67,17 +79,20 @@ class _GoalsScreenState
               ),
 
               ...dailyGoals.map(
-                (goal) => _goalCard(goal),
+                (goal) =>
+                    _goalCard(goal),
               ),
 
               const LuxurySectionSpacing(),
 
               const SectionTitle(
-                title: 'Long-Term Vision',
+                title:
+                    'Long-Term Vision',
               ),
 
               ...longTermGoals.map(
-                (goal) => _goalCard(goal),
+                (goal) =>
+                    _goalCard(goal),
               ),
 
               const LuxurySectionSpacing(),
@@ -93,10 +108,14 @@ class _GoalsScreenState
   ) {
     return LuxuryCard(
       icon: _goalIcon(goal.title),
+
       title: goal.title,
+
       subtitle: goal.subtitle,
+
       trailing: Column(
         children: [
+
           ProgressRing(
             text:
                 '${(goal.progress * 100).toInt()}%',
@@ -105,8 +124,10 @@ class _GoalsScreenState
           const SizedBox(height: 12),
 
           Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize:
+                MainAxisSize.min,
             children: [
+
               EditIconButton(
                 onPressed: () {
                   _showEditGoalDialog(
@@ -120,8 +141,11 @@ class _GoalsScreenState
 
               DeleteIconButton(
                 onPressed: () {
+
                   GoalsService.instance
-                      .deleteGoal(goal.id);
+                      .deleteGoal(
+                    goal.id,
+                  );
 
                   setState(() {});
                 },
@@ -133,73 +157,163 @@ class _GoalsScreenState
     );
   }
 
+  // ADD GOAL
   void _showAddGoalDialog(
     BuildContext context,
   ) {
+
     final titleController =
         TextEditingController();
 
     final subtitleController =
         TextEditingController();
 
+    String selectedCategory =
+        'Daily Focus';
+
     showDialog(
       context: context,
-      builder: (context) {
-        return LuxuryDialog(
-          title: 'Create Goal',
-          subtitle:
-              'Add a new dream, focus, or milestone.',
-          child: Column(
-            children: [
-              LuxuryTextField(
-                hintText: 'Goal Title',
-                icon: Icons.flag_outlined,
-                controller: titleController,
+
+      builder: (dialogContext) {
+
+        return StatefulBuilder(
+          builder:
+              (context, setDialogState) {
+
+            return LuxuryDialog(
+              title: 'Create Goal',
+
+              subtitle:
+                  'Add a new dream, focus, or milestone.',
+
+              child: Column(
+                children: [
+
+                  LuxuryTextField(
+                    hintText:
+                        'Goal Title',
+
+                    icon:
+                        Icons.flag_outlined,
+
+                    controller:
+                        titleController,
+                  ),
+
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  LuxuryTextField(
+                    hintText:
+                        'Description',
+
+                    icon:
+                        Icons.edit_outlined,
+
+                    controller:
+                        subtitleController,
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+
+                      CategoryPickerChip(
+                        text:
+                            'Daily Focus',
+
+                        selected:
+                            selectedCategory ==
+                                'Daily Focus',
+
+                        onTap: () {
+                          setDialogState(() {
+                            selectedCategory =
+                                'Daily Focus';
+                          });
+                        },
+                      ),
+
+                      CategoryPickerChip(
+                        text:
+                            'Long-Term Vision',
+
+                        selected:
+                            selectedCategory ==
+                                'Long-Term Vision',
+
+                        onTap: () {
+                          setDialogState(() {
+                            selectedCategory =
+                                'Long-Term Vision';
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 24,
+                  ),
+
+                  LuxuryButton(
+                    text: 'Save Goal',
+
+                    icon:
+                        Icons.save_outlined,
+
+                    onPressed: () {
+
+                      GoalsService.instance
+                          .addGoal(
+                        GoalModel(
+                          id: DateTime.now()
+                              .millisecondsSinceEpoch
+                              .toString(),
+
+                          title:
+                              titleController
+                                  .text,
+
+                          subtitle:
+                              subtitleController
+                                  .text,
+
+                          progress: .0,
+
+                          category:
+                              selectedCategory,
+                        ),
+                      );
+
+                      Navigator.pop(
+                        dialogContext,
+                      );
+
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 16),
-
-              LuxuryTextField(
-                hintText: 'Description',
-                icon: Icons.edit_outlined,
-                controller: subtitleController,
-              ),
-
-              const SizedBox(height: 24),
-
-              LuxuryButton(
-                text: 'Save Goal',
-                icon: Icons.save_outlined,
-                onPressed: () {
-                  GoalsService.instance.addGoal(
-                    GoalModel(
-                      id: DateTime.now()
-                          .millisecondsSinceEpoch
-                          .toString(),
-                      title: titleController.text,
-                      subtitle:
-                          subtitleController.text,
-                      progress: .0,
-                      category: 'Daily Focus',
-                    ),
-                  );
-
-                  Navigator.pop(context);
-
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
   }
 
+  // EDIT GOAL
   void _showEditGoalDialog(
     BuildContext context,
     GoalModel goal,
   ) {
+
     final titleController =
         TextEditingController(
       text: goal.title,
@@ -210,50 +324,136 @@ class _GoalsScreenState
       text: goal.subtitle,
     );
 
+    String selectedCategory =
+        goal.category;
+
     showDialog(
       context: context,
-      builder: (context) {
-        return LuxuryDialog(
-          title: 'Edit Goal',
-          subtitle:
-              'Update your focus or milestone.',
-          child: Column(
-            children: [
-              LuxuryTextField(
-                hintText: 'Goal Title',
-                icon: Icons.flag_outlined,
-                controller: titleController,
+
+      builder: (dialogContext) {
+
+        return StatefulBuilder(
+          builder:
+              (context, setDialogState) {
+
+            return LuxuryDialog(
+              title: 'Edit Goal',
+
+              subtitle:
+                  'Update your focus or milestone.',
+
+              child: Column(
+                children: [
+
+                  LuxuryTextField(
+                    hintText:
+                        'Goal Title',
+
+                    icon:
+                        Icons.flag_outlined,
+
+                    controller:
+                        titleController,
+                  ),
+
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  LuxuryTextField(
+                    hintText:
+                        'Description',
+
+                    icon:
+                        Icons.edit_outlined,
+
+                    controller:
+                        subtitleController,
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+
+                      CategoryPickerChip(
+                        text:
+                            'Daily Focus',
+
+                        selected:
+                            selectedCategory ==
+                                'Daily Focus',
+
+                        onTap: () {
+                          setDialogState(() {
+                            selectedCategory =
+                                'Daily Focus';
+                          });
+                        },
+                      ),
+
+                      CategoryPickerChip(
+                        text:
+                            'Long-Term Vision',
+
+                        selected:
+                            selectedCategory ==
+                                'Long-Term Vision',
+
+                        onTap: () {
+                          setDialogState(() {
+                            selectedCategory =
+                                'Long-Term Vision';
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 24,
+                  ),
+
+                  LuxuryButton(
+                    text:
+                        'Update Goal',
+
+                    icon:
+                        Icons.save_outlined,
+
+                    onPressed: () {
+
+                      GoalsService.instance
+                          .updateGoal(
+                        goal.copyWith(
+                          title:
+                              titleController
+                                  .text,
+
+                          subtitle:
+                              subtitleController
+                                  .text,
+
+                          category:
+                              selectedCategory,
+                        ),
+                      );
+
+                      Navigator.pop(
+                        dialogContext,
+                      );
+
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 16),
-
-              LuxuryTextField(
-                hintText: 'Description',
-                icon: Icons.edit_outlined,
-                controller: subtitleController,
-              ),
-
-              const SizedBox(height: 24),
-
-              LuxuryButton(
-                text: 'Update Goal',
-                icon: Icons.save_outlined,
-                onPressed: () {
-                  GoalsService.instance.updateGoal(
-                    goal.copyWith(
-                      title: titleController.text,
-                      subtitle:
-                          subtitleController.text,
-                    ),
-                  );
-
-                  Navigator.pop(context);
-
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -263,6 +463,7 @@ class _GoalsScreenState
     String title,
   ) {
     switch (title) {
+
       case 'Self Care Routine':
         return Icons.spa_outlined;
 
@@ -270,7 +471,8 @@ class _GoalsScreenState
         return Icons.menu_book_outlined;
 
       case 'Workout':
-        return Icons.fitness_center_outlined;
+        return Icons
+            .fitness_center_outlined;
 
       case 'Financial Freedom':
         return Icons
