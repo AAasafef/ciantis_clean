@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'theme/ciantis_theme.dart';
 
 void main() {
   runApp(const CiantisApp());
@@ -13,11 +14,7 @@ class CiantisApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ciantis',
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF6F0EA),
-        fontFamily: 'SF Pro Display',
-      ),
+      theme: CiantisTheme.themeData,
       home: const DashboardScreen(),
     );
   }
@@ -55,31 +52,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-
-      // SIDE SWIPE MENU
       drawer: _sideMenu(),
-
       body: Stack(
         children: [
 
           // BACKGROUND
           Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF7A5A47),
-                  Color(0xFF9B7B66),
-                  Color(0xFFD8C2AE),
-                ],
-              ),
+              gradient: CiantisTheme.mainGradient,
             ),
           ),
 
           // OVERLAY
           Container(
-            color: Colors.black.withOpacity(.15),
+            color: Colors.black.withOpacity(
+              CiantisTheme.overlayOpacity,
+            ),
           ),
 
           SafeArea(
@@ -89,7 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // TOP BAR
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
+                    horizontal: CiantisTheme.pagePadding,
                     vertical: 10,
                   ),
                   child: Row(
@@ -104,7 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         },
                         child: const Icon(
                           Icons.menu_rounded,
-                          color: Colors.white,
+                          color: CiantisTheme.white,
                           size: 28,
                         ),
                       ),
@@ -112,8 +100,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const Text(
                         'the life',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
+                          color: CiantisTheme.white,
+                          fontSize:
+                              CiantisTheme.appTitleSize,
                           fontWeight: FontWeight.w300,
                           letterSpacing: 1,
                         ),
@@ -130,7 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           showGridMenu
                               ? Icons.close_rounded
                               : Icons.apps_rounded,
-                          color: Colors.white,
+                          color: CiantisTheme.white,
                           size: 28,
                         ),
                       ),
@@ -147,24 +136,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       horizontal: 24,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(
+                        CiantisTheme.radiusXLarge,
+                      ),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(
-                          sigmaX: 20,
-                          sigmaY: 20,
+                          sigmaX:
+                              CiantisTheme.blurLight,
+                          sigmaY:
+                              CiantisTheme.blurLight,
                         ),
                         child: Container(
-                          padding: const EdgeInsets.all(24),
+                          padding:
+                              const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(.15),
+                            color: Colors.white.withOpacity(
+                              CiantisTheme.glassOpacity,
+                            ),
                             borderRadius:
-                                BorderRadius.circular(30),
+                                BorderRadius.circular(
+                              CiantisTheme.radiusXLarge,
+                            ),
                             border: Border.all(
-                              color: Colors.white.withOpacity(.2),
+                              color: Colors.white
+                                  .withOpacity(
+                                CiantisTheme
+                                    .glassBorderOpacity,
+                              ),
                             ),
                           ),
                           child: const Column(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisSize:
+                                MainAxisSize.min,
                             crossAxisAlignment:
                                 CrossAxisAlignment.start,
                             children: [
@@ -172,7 +175,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Text(
                                 'Welcome back',
                                 style: TextStyle(
-                                  color: Colors.white70,
+                                  color: CiantisTheme
+                                      .whiteSoft,
                                   fontSize: 14,
                                 ),
                               ),
@@ -182,9 +186,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Text(
                                 'Your luxury life OS',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w300,
+                                  color:
+                                      CiantisTheme.white,
+                                  fontSize:
+                                      CiantisTheme
+                                          .titleSize,
+                                  fontWeight:
+                                      FontWeight.w300,
                                 ),
                               ),
 
@@ -193,8 +201,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Text(
                                 'Everything organized beautifully.',
                                 style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 15,
+                                  color: CiantisTheme
+                                      .whiteSoft,
+                                  fontSize:
+                                      CiantisTheme
+                                          .bodySize,
                                 ),
                               ),
                             ],
@@ -208,28 +219,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 if (showGridMenu)
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 22,
+                      margin:
+                          const EdgeInsets.only(top: 10),
+                      padding:
+                          const EdgeInsets.symmetric(
+                        horizontal:
+                            CiantisTheme.pagePadding,
                         vertical: 18,
                       ),
                       decoration: const BoxDecoration(
-                        color: Color(0xFFF5EEE7),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(34),
-                          topRight: Radius.circular(34),
+                        color:
+                            CiantisTheme.creamPanel,
+                        borderRadius:
+                            BorderRadius.only(
+                          topLeft: Radius.circular(
+                            CiantisTheme.radiusSheet,
+                          ),
+                          topRight: Radius.circular(
+                            CiantisTheme.radiusSheet,
+                          ),
                         ),
                       ),
                       child: Column(
                         children: [
 
+                          // DRAG BAR
                           Container(
                             height: 5,
                             width: 50,
                             decoration: BoxDecoration(
                               color: Colors.brown,
                               borderRadius:
-                                  BorderRadius.circular(20),
+                                  BorderRadius.circular(
+                                20,
+                              ),
                             ),
                           ),
 
@@ -239,21 +262,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           TextField(
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Search anything...',
+                              fillColor:
+                                  CiantisTheme.white,
+                              hintText:
+                                  'Search anything...',
                               prefixIcon:
-                                  const Icon(Icons.search),
-                              border: OutlineInputBorder(
+                                  const Icon(
+                                Icons.search,
+                              ),
+                              border:
+                                  OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.circular(18),
-                                borderSide: BorderSide.none,
+                                    BorderRadius.circular(
+                                  18,
+                                ),
+                                borderSide:
+                                    BorderSide.none,
                               ),
                             ),
                           ),
 
                           const SizedBox(height: 24),
 
-                          // APP GRID
+                          // GRID
                           Expanded(
                             child: GridView.builder(
                               itemCount: apps.length,
@@ -264,9 +295,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 mainAxisSpacing: 18,
                                 childAspectRatio: .82,
                               ),
-                              itemBuilder: (context, index) {
+                              itemBuilder:
+                                  (context, index) {
 
-                                final app = apps[index];
+                                final app =
+                                    apps[index];
 
                                 return Column(
                                   children: [
@@ -274,26 +307,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Container(
                                       height: 68,
                                       width: 68,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
+                                      decoration:
+                                          BoxDecoration(
+                                        color:
+                                            CiantisTheme
+                                                .white,
                                         borderRadius:
-                                            BorderRadius.circular(20),
+                                            BorderRadius.circular(
+                                          CiantisTheme
+                                              .radiusMedium,
+                                        ),
                                       ),
                                       child: Icon(
                                         app['icon'],
-                                        color: const Color(
-                                            0xFF8D6748),
+                                        color:
+                                            CiantisTheme
+                                                .warmBrown,
                                         size: 28,
                                       ),
                                     ),
 
-                                    const SizedBox(height: 8),
+                                    const SizedBox(
+                                        height: 8),
 
                                     Text(
                                       app['title'],
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xFF5D4638),
+                                      style:
+                                          const TextStyle(
+                                        fontSize:
+                                            CiantisTheme
+                                                .smallSize,
+                                        color:
+                                            CiantisTheme
+                                                .textBrown,
                                       ),
                                     ),
                                   ],
@@ -315,22 +361,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Positioned(
             left: 24,
             right: 24,
-            bottom: 30,
+            bottom:
+                CiantisTheme.bottomBarBottomPadding,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(
+                CiantisTheme.radiusLarge,
+              ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(
-                  sigmaX: 20,
-                  sigmaY: 20,
+                  sigmaX: CiantisTheme.blurLight,
+                  sigmaY: CiantisTheme.blurLight,
                 ),
                 child: Container(
-                  height: 72,
+                  height:
+                      CiantisTheme.bottomBarHeight,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.15),
+                    color: Colors.white.withOpacity(
+                      CiantisTheme.glassOpacity,
+                    ),
                     borderRadius:
-                        BorderRadius.circular(28),
+                        BorderRadius.circular(
+                      CiantisTheme.radiusLarge,
+                    ),
                     border: Border.all(
-                      color: Colors.white.withOpacity(.2),
+                      color: Colors.white
+                          .withOpacity(
+                        CiantisTheme
+                            .glassBorderOpacity,
+                      ),
                     ),
                   ),
                   child: Row(
@@ -340,45 +398,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       const Icon(
                         Icons.home_outlined,
-                        color: Colors.white,
+                        color: CiantisTheme.white,
                       ),
 
                       const Icon(
                         Icons.favorite_border,
-                        color: Colors.white,
+                        color: CiantisTheme.white,
                       ),
 
+                      // CENTER BUTTON
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            showGridMenu = !showGridMenu;
+                            showGridMenu =
+                                !showGridMenu;
                           });
                         },
                         child: Container(
                           height: 56,
                           width: 56,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:
+                                CiantisTheme.white,
                             borderRadius:
-                                BorderRadius.circular(20),
+                                BorderRadius.circular(
+                              20,
+                            ),
                           ),
                           child: Icon(
                             showGridMenu
                                 ? Icons.close_rounded
                                 : Icons.apps_rounded,
-                            color: const Color(0xFF7B5A43),
+                            color: CiantisTheme
+                                .deepBrown,
                           ),
                         ),
                       ),
 
                       const Icon(
                         Icons.calendar_month_outlined,
-                        color: Colors.white,
+                        color: CiantisTheme.white,
                       ),
 
                       const Icon(
                         Icons.person_outline,
-                        color: Colors.white,
+                        color: CiantisTheme.white,
                       ),
                     ],
                   ),
@@ -396,13 +460,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       backgroundColor: Colors.transparent,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(40),
-          bottomRight: Radius.circular(40),
+          topRight: Radius.circular(
+            CiantisTheme.radiusDrawer,
+          ),
+          bottomRight: Radius.circular(
+            CiantisTheme.radiusDrawer,
+          ),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: 25,
-            sigmaY: 25,
+            sigmaX: CiantisTheme.blurHeavy,
+            sigmaY: CiantisTheme.blurHeavy,
           ),
           child: Container(
             color: Colors.brown.withOpacity(.35),
@@ -421,10 +489,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         CircleAvatar(
                           radius: 34,
                           backgroundColor:
-                              const Color(0xFF8B5E4A),
+                              CiantisTheme
+                                  .profileBrown,
                           child: const Icon(
                             Icons.person,
-                            color: Colors.white,
+                            color:
+                                CiantisTheme.white,
                             size: 34,
                           ),
                         ),
@@ -433,14 +503,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                         const Column(
                           crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                              CrossAxisAlignment
+                                  .start,
                           children: [
 
                             Text(
                               'the life',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
+                                color: CiantisTheme
+                                    .white,
+                                fontSize:
+                                    CiantisTheme
+                                        .titleSize,
                                 fontWeight:
                                     FontWeight.w300,
                               ),
@@ -451,7 +525,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Text(
                               'I\'M BUILDING',
                               style: TextStyle(
-                                color: Colors.white70,
+                                color: CiantisTheme
+                                    .whiteSoft,
                                 letterSpacing: 2,
                                 fontSize: 12,
                               ),
@@ -513,7 +588,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           Icon(
             icon,
-            color: Colors.white,
+            color: CiantisTheme.white,
             size: 24,
           ),
 
@@ -522,7 +597,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(
             title,
             style: const TextStyle(
-              color: Colors.white,
+              color: CiantisTheme.white,
               fontSize: 17,
               fontWeight: FontWeight.w300,
             ),
