@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../services/journal_service.dart';
+
 import '../../widgets/ciantis_screen_shell.dart';
-import '../../widgets/empty_state_card.dart';
+import '../../widgets/journal_entry_card.dart';
 import '../../widgets/luxury_button.dart';
 import '../../widgets/luxury_page_padding.dart';
 import '../../widgets/luxury_scroll_view.dart';
@@ -14,6 +16,11 @@ class JournalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final entries =
+        JournalService.instance
+            .getEntries();
+
     return CiantisScreenShell(
       child: LuxuryPagePadding(
         child: LuxuryScrollView(
@@ -34,7 +41,8 @@ class JournalScreen extends StatelessWidget {
               // BUTTON
               LuxuryButton(
                 text: 'New Journal Entry',
-                icon: Icons.edit_note_outlined,
+                icon:
+                    Icons.edit_note_outlined,
                 onPressed: () {},
               ),
 
@@ -42,33 +50,21 @@ class JournalScreen extends StatelessWidget {
                 height: 36,
               ),
 
-              // TODAY
+              // ENTRIES
               const SectionTitle(
-                title: 'Today',
+                title: 'Recent Entries',
               ),
 
-              const EmptyStateCard(
-                icon: Icons.menu_book_outlined,
-                title: 'No Entries Yet',
-                subtitle:
-                    'Your journal entries will appear here beautifully organized.',
+              ...entries.map(
+                (entry) =>
+                    JournalEntryCard(
+                  entry: entry,
+                ),
               ),
 
-              const LuxurySectionSpacing(),
-
-              // PROMPTS
-              const SectionTitle(
-                title: 'Reflection Prompts',
+              const LuxurySectionSpacing(
+                height: 120,
               ),
-
-              const EmptyStateCard(
-                icon: Icons.lightbulb_outline,
-                title: 'Daily Reflection',
-                subtitle:
-                    'What made you feel most alive today?',
-              ),
-
-              const LuxurySectionSpacing(),
             ],
           ),
         ),
